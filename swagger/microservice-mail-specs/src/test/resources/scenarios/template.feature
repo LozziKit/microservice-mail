@@ -5,7 +5,7 @@ Feature: Creation of templates
 
   Scenario: create a template
     Given I have a template payload
-    When I POST it to the /templates endpoint
+    When I POST the payload to the /templates endpoint
     Then I receive a 201 status code
 
   Scenario: Bad creation of template
@@ -14,10 +14,16 @@ Feature: Creation of templates
     Then I receive a 400 status code
 
   Scenario: fetch all templates
-    Given I want to fetch all template
-    When I GET withtout an id to the /templates endpoint
+    Given I want to fetch all template without an id
+    When I GET without an id to the /templates endpoint
     Then I receive a 200 status code
     And I receive multiple template payloads
+
+  Scenario: fetch all templates
+    Given I want to fetch all templates but DB is empty
+    But There is not template in DB
+    When I GET to the /templates endpoint
+    Then I receive a 204 status code
 
   Scenario: fetch a template
     Given I have a template id
@@ -35,14 +41,4 @@ Feature: Creation of templates
     When I GET to the /templates endpoint
     Then I receive a 400 status code
 
-  Scenario: fetch all templates
-    Given I want to fetch all template
-    When I GET withtout an id to the /templates endpoint
-    Then I receive a 200 status code
-    And I receive multiple template payloads
 
-  Scenario: fetch all templates
-    Given I want to fetch all templates
-    But There is not template in DB
-    When I GET to the /templates endpoint
-    Then I receive a 204 status code
