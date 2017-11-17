@@ -1,0 +1,79 @@
+openapi: 3.0.0
+info:
+    title: microservice-mail
+    description: 'Microservice mail pour le cours AMT 2017.'
+    contact:
+        name: Christopher Meier
+        email: christopher.meier@heig-vd.ch
+    version: 0.1.0
+paths:
+    /mails:
+        get:
+            tags:
+                - mail
+            description: Récupérer l'historique/status des mails envoyés.
+        post:
+            tags:
+                - mail
+            description: Envoyer un mail (peut avoir plusieurs payload).
+    /mails/{mailId}:
+        get:
+            tags:
+                - mail
+            description: Récupérer le status d'un message spécifique.
+        parameters:
+            - name: mailId
+              in: path
+              description: L'id du mail sur lequel on veut effectuer une action.
+              required: true
+              schema:
+                  type: integer
+    /templates:
+        get:
+            tags:
+                - template
+            description: Récupérer la liste des templates disponibles.
+        post:
+            tags:
+                - template
+            description: Créer un nouveau template.
+    /templates/{templateId}:
+        get:
+            tags:
+                - template
+            description: Récupérer le template spécifié.
+        put:
+            tags:
+                - template
+            description: Modifier le template spécifié.
+        delete:
+            tags:
+                - template
+            description: Supprimer le template spécifié.
+        parameters:
+            - name: templateId
+              in: path
+              description: L'id du template sur lequel il faut effectuer une action.
+              required: true
+              schema:
+                  type: integer
+
+components:
+    schemas:
+        MailDto:
+            type: object
+            properties:
+                templateId:
+                    type: integer
+
+        TemplateDto:
+            type: object
+            properties:
+                templateId:
+                    type: integer
+                name:
+                    type: string
+                description:
+                    type: string
+                content:
+                    type: string
