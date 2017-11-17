@@ -1,6 +1,6 @@
 package io.lozzikit.mail.api.spec.helpers;
 
-import io.lozzikit.mail.api.DefaultApi;
+import io.lozzikit.mail.api.TemplateApi;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -10,7 +10,7 @@ import java.util.Properties;
  */
 public class Environment {
 
-    private DefaultApi api = new DefaultApi();
+    private TemplateApi api = new TemplateApi();
 
     public Environment() throws IOException {
         Properties properties = new Properties();
@@ -20,7 +20,7 @@ public class Environment {
 
     }
 
-    public DefaultApi getApi() {
+    public TemplateApi getApi() {
         return api;
     }
 
