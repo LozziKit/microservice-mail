@@ -2,10 +2,7 @@ package io.swagger.entity;
 
 import io.lozzikit.mail.api.model.TemplateDto;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "templates")
@@ -20,6 +17,7 @@ public class TemplateEntity {
         this.templateDto = templateDto;
     }
 
+    @Id
     @Column(name = "id")
     public Integer getId() {
         return templateDto.getId();

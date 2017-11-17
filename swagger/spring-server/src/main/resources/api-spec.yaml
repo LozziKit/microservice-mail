@@ -51,6 +51,7 @@ paths:
             tags:
                 - template
             description: Get the list of available templates.
+            operationId: templatesGet
             responses:
                 '200':
                     description: Returned the template list successfuly.
@@ -60,6 +61,7 @@ paths:
             tags:
                 - template
             description: Create a new template.
+            operationId: templatesPost
             responses:
                 '200':
                     description: Template has been created successfully.
