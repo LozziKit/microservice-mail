@@ -4,36 +4,36 @@ info:
     description: 'Mailing microservice for the AMT 2017 course @ HEIG-VD.'
     version: 0.1.0
 paths:
-    /mails:
-        get:
-            tags:
-                - mail
-            description: Get the mail history.
-            responses:
-                '200':
-                    description: Returned the history successfuly.
-        post:
-            tags:
-                - mail
-            description: Send a mail (can use multiple payloads).
-            responses:
-                '200':
-                    description: Mail sent successfuly.
+#    /mails:
+#        get:
+#            tags:
+#                - mail
+#            description: Get the mail history.
+#            responses:
+#                '200':
+#                    description: Returned the history successfuly.
+#        post:
+#            tags:
+#                - mail
+#            description: Send a mail (can use multiple payloads).
+#            responses:
+#                '200':
+#                    description: Mail sent successfuly.
 
-    /mails/{id}:
-        get:
-            tags:
-                - mail
-            description: Get the status of a specified mail.
-            responses:
-                '200':
-                    description: Returned the status successfuly.
-        parameters:
-            - in: path
-              name: id
-              description: The id of the mail we want to do something with.
-              required: true
-              type: integer
+#    /mails/{id}:
+#        get:
+#            tags:
+#                - mail
+#            description: Get the status of a specified mail.
+#            responses:
+#                '200':
+#                    description: Returned the status successfuly.
+#        parameters:
+#            - in: path
+#              name: id
+#              description: The id of the mail we want to do something with.
+#              required: true
+#              type: integer
 
     /templates:
         get:
@@ -48,37 +48,37 @@ paths:
                 - template
             description: Create a new template.
             responses:
-                '200':
+                '201':
                     description: Template has been created successfuly.
 
-    /templates/{id}:
-        get:
-            tags:
-                - template
-            description: Get a specified template.
-            responses:
-                '200':
-                    description: Returned the template successfuly.
-        put:
-            tags:
-                - template
-            description: Update a specified template.
-            responses:
-                '200':
-                    description: Updated the template successfuly.
-        delete:
-            tags:
-                - template
-            description: Delete a specified template.
-            responses:
-                '200':
-                    description: Deleted the template successfuly.
-        parameters:
-            - name: id
-              in: path
-              description: The id of the template we want to do something with.
-              required: true
-              type: integer
+#    /templates/{id}:
+#        get:
+#            tags:
+#                - template
+#            description: Get a specified template.
+#            responses:
+#                '200':
+#                    description: Returned the template successfuly.
+#        put:
+#            tags:
+#                - template
+#            description: Update a specified template.
+#            responses:
+#                '200':
+#                    description: Updated the template successfuly.
+#        delete:
+#            tags:
+#                - template
+#            description: Delete a specified template.
+#            responses:
+#                '200':
+#                    description: Deleted the template successfuly.
+#        parameters:
+#            - name: id
+#              in: path
+#              description: The id of the template we want to do something with.
+#              required: true
+#              type: integer
 
 definitions:
     MailDto:
