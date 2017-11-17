@@ -11,14 +11,20 @@ paths:
             description: Get the mail history.
             responses:
                 '200':
-                    description: Returned the history successfuly.
+                    description: Returned the history successfully.
+                '204':
+                    description: Mail history is empty.
         post:
             tags:
                 - mail
             description: Send a mail (can use multiple payloads).
             responses:
-                '200':
-                    description: Mail sent successfuly.
+                '201':
+                    description: Mail sent successfully.
+                '206':
+                    description: Not all mails were able to be sent.
+                '406':
+                    description: Wrong formatting.
 
     /mails/{id}:
         get:
@@ -27,7 +33,12 @@ paths:
             description: Get the status of a specified mail.
             responses:
                 '200':
-                    description: Returned the status successfuly.
+                    description: Returned the status successfully.
+                '400':
+                    description: Request malformed.
+                '404':
+                    description: Mail not found in history.
+
         parameters:
             - in: path
               name: id
@@ -43,13 +54,17 @@ paths:
             responses:
                 '200':
                     description: Returned the template list successfuly.
+                '204':
+                    description: No templates to return.
         post:
             tags:
                 - template
             description: Create a new template.
             responses:
                 '200':
-                    description: Template has been created successfuly.
+                    description: Template has been created successfully.
+                '406':
+                    description: Invalid template.
 
     /templates/{id}:
         get:
@@ -58,21 +73,35 @@ paths:
             description: Get a specified template.
             responses:
                 '200':
-                    description: Returned the template successfuly.
+                    description: Returned the template successfully.
+                '400':
+                    description: Request malformed.
+                '404':
+                    description: Template not found.
         put:
             tags:
                 - template
             description: Update a specified template.
             responses:
                 '200':
-                    description: Updated the template successfuly.
+                    description: Updated the template successfully.
+                '400':
+                    description: Request malformed.
+                '404':
+                    description: Template not found.
+                '406':
+                    description: Invalid new template.
         delete:
             tags:
                 - template
             description: Delete a specified template.
             responses:
                 '200':
-                    description: Deleted the template successfuly.
+                    description: Deleted the template successfully.
+                '400':
+                    description: Request malformed.
+                '404':
+                    description: Template not found.
         parameters:
             - name: id
               in: path
