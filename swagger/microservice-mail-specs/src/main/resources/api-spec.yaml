@@ -10,7 +10,7 @@ paths:
 #                - mail
 #            description: Get the mail history.
 #            responses:
-#                '200':
+#                '201':
 #                    description: Returned the history successfuly.
 #        post:
 #            tags:
