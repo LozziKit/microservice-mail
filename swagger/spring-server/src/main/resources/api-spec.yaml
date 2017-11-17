@@ -66,6 +66,8 @@ paths:
                 - template
             description: Create a new template.
             operationId: templatesPost
+            consumes:
+                - application/json
             responses:
                 '200':
                     description: Template has been created successfully.
@@ -77,48 +79,54 @@ paths:
                   schema:
                     $ref: "#/definitions/TemplateDto"
 
-#    /templates/{id}:
-#        get:
-#            tags:
-#                - template
-#            description: Get a specified template.
-#            responses:
-#                '200':
-#                    description: Returned the template successfully.
-#                '400':
-#                    description: Request malformed.
-#                '404':
-#                    description: Template not found.
-#        put:
-#            tags:
-#                - template
-#            description: Update a specified template.
-#            responses:
-#                '200':
-#                    description: Updated the template successfully.
-#                '400':
-#                    description: Request malformed.
-#                '404':
-#                    description: Template not found.
-#                '406':
-#                    description: Invalid new template.
-#        delete:
-#            tags:
-#                - template
-#            description: Delete a specified template.
-#            responses:
-#                '200':
-#                    description: Deleted the template successfully.
-#                '400':
-#                    description: Request malformed.
-#                '404':
-#                    description: Template not found.
-#        parameters:
-#            - name: id
-#              in: path
-#              description: The id of the template we want to do something with.
-#              required: true
-#              type: integer
+    /templates/{id}:
+        get:
+            tags:
+                - template
+            description: Get a specified template.
+            operationId: templatesIdGet
+            responses:
+                '200':
+                    description: Returned the template successfully.
+                    schema:
+                        $ref: '#/definitions/TemplateDto'
+                '404':
+                    description: Template not found.
+        put:
+            tags:
+                - template
+            description: Update a specified template.
+            operationId: templatesIdPut
+            responses:
+            responses:
+                '200':
+                    description: Updated the template successfully.
+                '404':
+                    description: Template not found.
+                '406':
+                    description: Invalid new template.
+            parameters:
+                - name: templateDto
+                  in: body
+                  schema:
+                    $ref: "#/definitions/TemplateDto"
+        delete:
+            tags:
+                - template
+            description: Delete a specified template.
+            operationId: templatesIdDelete
+            responses:
+            responses:
+                '200':
+                    description: Deleted the template successfully.
+                '404':
+                    description: Template not found.
+        parameters:
+            - name: id
+              in: path
+              description: The id of the template we want to do something with.
+              required: true
+              type: integer
 
 definitions:
     MailDto:
