@@ -18,6 +18,7 @@ public class TemplateEntity {
     }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     public Integer getId() {
         return templateDto.getId();

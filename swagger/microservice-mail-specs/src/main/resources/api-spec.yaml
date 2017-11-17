@@ -19,11 +19,11 @@ paths:
 #                - mail
 #            description: Send a mail (can use multiple payloads).
 #            responses:
-#                '202':
+#                '201':
 #                    description: Mail sent successfully.
 #                '206':
 #                    description: Not all mails were able to be sent.
-#                '400':
+#                '406':
 #                    description: Wrong formatting.
 #
 #    /mails/{id}:
@@ -55,10 +55,10 @@ paths:
             responses:
                 '200':
                     description: Returned the template list successfuly.
-                    content:
-                      application/json:
-                        schema:
-                          $ref: "#/definitions/TemplateDto"
+                    schema:
+                        type: array
+                        items:
+                            $ref: '#/definitions/TemplateDto'
                 '204':
                     description: No templates to return.
         post:
@@ -67,9 +67,9 @@ paths:
             description: Create a new template.
             operationId: templatesPost
             responses:
-                '201':
+                '200':
                     description: Template has been created successfully.
-                '400':
+                '406':
                     description: Invalid template.
             parameters:
                 - name: templateDto
@@ -100,6 +100,8 @@ paths:
 #                    description: Request malformed.
 #                '404':
 #                    description: Template not found.
+#                '406':
+#                    description: Invalid new template.
 #        delete:
 #            tags:
 #                - template

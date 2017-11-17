@@ -55,6 +55,10 @@ paths:
             responses:
                 '200':
                     description: Returned the template list successfuly.
+                    schema:
+                        type: array
+                        items:
+                            $ref: '#/definitions/TemplateDto'
                 '204':
                     description: No templates to return.
         post:

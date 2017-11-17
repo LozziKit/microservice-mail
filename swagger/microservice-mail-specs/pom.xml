@@ -18,7 +18,7 @@
         <jodatime-version>2.9.4</jodatime-version>
         <okhttp-version>2.7.5</okhttp-version>
         <gson-version>2.6.2</gson-version>
-        <io.lozzikit.mail.server.url>http://localhost:8080/api/</io.lozzikit.mail.server.url>
+        <io.lozzikit.mail.server.url>http://localhost:8080/mail/v1/</io.lozzikit.mail.server.url>
     </properties>
 
     <build>
