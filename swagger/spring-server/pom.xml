@@ -4,7 +4,7 @@
     <groupId>io.lozzikit</groupId>
     <artifactId>microservice-mail-server</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.0</version>
+    <version>1.0-SNAPSHOT</version>
 
     <properties>
         <java.version>1.8</java.version>
@@ -52,11 +52,35 @@
                                 <useBeanValidation>true</useBeanValidation>
                                 <interfaceOnly>true</interfaceOnly>
                                 <delegatePattern>false</delegatePattern>
+                                <basePackage>io.lozzikit.mail</basePackage>
                                 <apiPackage>io.lozzikit.mail.api</apiPackage>
                                 <configPackage>io.lozzikit.mail.config</configPackage>
-                                <basePackage>io.lozzikit.mail</basePackage>
                                 <modelPackage>io.lozzikit.mail.api.model</modelPackage>
                             </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.basedir}/src/main/resources/</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/../</directory>
+                                    <includes>
+                                        <include>api-spec.yaml</include>
+                                    </includes>
+                                </resource>
+                            </resources>
                         </configuration>
                     </execution>
                 </executions>
@@ -65,6 +89,11 @@
     </build>
 
     <dependencies>
+        <dependency>
+            <groupId>io.lozzikit</groupId>
+            <artifactId>microservice-mail-api-spec</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>

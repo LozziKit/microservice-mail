@@ -20,21 +20,6 @@ public class TemplatesApiController implements TemplatesApi {
     }
 
     @Override
-    public ResponseEntity<Void> templatesIdDelete(Integer id) {
-        return new ResponseEntity<Void>(HttpStatus.OK);
-    }
-
-    @Override
-    public ResponseEntity<Void> templatesIdGet(Integer id) {
-        return new ResponseEntity<Void>(HttpStatus.OK);
-    }
-
-    @Override
-    public ResponseEntity<Void> templatesIdPut(Integer id) {
-        return new ResponseEntity<Void>(HttpStatus.OK);
-    }
-
-    @Override
     public ResponseEntity<Void> templatesPost(TemplateDto templateDto) {
         templateService.addTemplate(templateDto);
         return new ResponseEntity<Void>(HttpStatus.OK);
