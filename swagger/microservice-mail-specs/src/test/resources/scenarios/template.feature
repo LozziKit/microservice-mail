@@ -16,9 +16,45 @@ Feature: Creation of templates
 
   Scenario: Fetch a template
     Given A template id
+    And A filled database
     When I GET on the /templates/id endpoint
     Then I receive a 200 status code
     And I receive a template payload
+
+  Scenario: Update a template
+    Given A template id
+    And A filled database
+    And A template payload
+    When I PUT on the /templates/id endpoint
+    Then I receive a 200 status code
+    When I GET on the /templates/id endpoint
+    Then I receive a 200 status code
+
+  Scenario: Update a non existing template
+    Given A non-existing template id
+    And A template payload
+    When I PUT on the /templates/id endpoint
+    Then I receive a 404 status code
+
+  Scenario: Update with an invalid template
+    Given A template id
+    And A filled database
+    And I have a bad template payload
+    When I PUT on the /templates/id endpoint
+    Then I receive a 406 status code
+
+  Scenario: Delete an existing template
+    Given A template id
+    And A filled database
+    When I DELETE on the /templates/id endpoint
+    Then I receive a 200 status code
+    When I GET on the /templates/id endpoint
+    Then I receive a 404 status code
+
+  Scenario: Delete a non existing template
+    Given A non-existing template id
+    When I DELETE on the /templates/id endpoint
+    Then I receive a 404 status code
 
   Scenario: Create a template
     Given A template payload

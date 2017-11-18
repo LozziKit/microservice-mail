@@ -1,5 +1,7 @@
 package io.lozzikit.mail.api.spec.steps;
 
+import cucumber.api.PendingException;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -104,7 +106,7 @@ public class CreationSteps {
         templateDto = new TemplateDto();
         templateDto.setName("test-templateDto");
         templateDto.setDescription("A templateDto for testing using cucumber");
-        templateDto.setContent("Hello ${name}!");
+        templateDto.setContent("Hello <p th:text=\"#{name}\">Madam/Sir</p>");
     }
 
     @When("^I POST the payload to the /templates endpoint$")
@@ -124,7 +126,7 @@ public class CreationSteps {
         templateDto = new TemplateDto();
         templateDto.setName("test-templateDto");
         templateDto.setDescription("A templateDto for testing using cucumber");
-        templateDto.setContent("Hello ${");
+        templateDto.setContent("Hello <p th:text=\"#{name");
     }
 
     @Given("^A non-existing template id$")
@@ -137,5 +139,29 @@ public class CreationSteps {
         apiResponse = null;
         apiException = e;
         apiStatusCode = e.getCode();
+    }
+
+    @When("^I PUT on the /templates/id endpoint$")
+    public void iPUTOnTheTemplatesIdEndpoint() throws Throwable {
+        try {
+            apiResponse = api.templatesIdPutWithHttpInfo(templateId, templateDto);
+            apiCallThrewException = false;
+            apiException = null;
+            apiStatusCode = apiResponse.getStatusCode();
+        } catch (ApiException e) {
+            reset(e);
+        }
+    }
+
+    @When("^I DELETE on the /templates/id endpoint$")
+    public void iDELETEOnTheTemplatesIdEndpoint() throws Throwable {
+        try {
+            apiResponse = api.templatesIdDeleteWithHttpInfo(templateId);
+            apiCallThrewException = false;
+            apiException = null;
+            apiStatusCode = apiResponse.getStatusCode();
+        } catch (ApiException e) {
+            reset(e);
+        }
     }
 }

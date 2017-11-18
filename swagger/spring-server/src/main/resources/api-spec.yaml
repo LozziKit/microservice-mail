@@ -69,7 +69,7 @@ paths:
             consumes:
                 - application/json
             responses:
-                '200':
+                '201':
                     description: Template has been created successfully.
                 '406':
                     description: Invalid template.
