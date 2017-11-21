@@ -35,7 +35,7 @@ public class TemplatesApiController implements TemplatesApi {
     public ResponseEntity<Void> templatesIdDelete(@PathVariable Integer id) {
         try {
             templateService.deleteTemplate(id);
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
             return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
         }
 
