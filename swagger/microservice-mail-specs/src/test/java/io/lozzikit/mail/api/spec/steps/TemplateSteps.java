@@ -1,12 +1,9 @@
 package io.lozzikit.mail.api.spec.steps;
 
-import cucumber.api.PendingException;
-import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.lozzikit.mail.ApiException;
-import io.lozzikit.mail.ApiResponse;
 import io.lozzikit.mail.api.TemplateApi;
 import io.lozzikit.mail.api.dto.TemplateDto;
 import io.lozzikit.mail.api.spec.helpers.Environment;
@@ -18,21 +15,16 @@ import static org.junit.Assert.*;
 /**
  * Created by Olivier Liechti on 27/07/17.
  */
-public class CreationSteps {
-    private Environment environment;
+public class TemplateSteps {
+    private Environment env;
     private TemplateApi api;
 
     private TemplateDto templateDto;
     private int templateId;
 
-    private ApiResponse apiResponse;
-    private ApiException apiException;
-    private boolean apiCallThrewException;
-    private int apiStatusCode;
-
-    public CreationSteps(Environment environment) {
-        this.environment = environment;
-        this.api = environment.getApi();
+    public TemplateSteps(Environment environment) {
+        this.env = environment;
+        this.api = environment.getTemplateApi();
     }
 
     @Given("^A template endpoint$")
@@ -40,28 +32,16 @@ public class CreationSteps {
         assertNotNull(api);
     }
 
-    @Given("^An empty database$")
-    public void an_empty_database() throws Throwable {
-    }
-
     @When("^I GET on the /templates endpoint$")
     public void i_GET_on_the_templates_endpoint() throws Throwable {
         try {
-            apiResponse = api.templatesGetWithHttpInfo();
-            apiCallThrewException = false;
-            apiException = null;
-            apiStatusCode = apiResponse.getStatusCode();
+            env.setApiResponse(api.templatesGetWithHttpInfo());
         } catch (ApiException e) {
-            reset(e);
+            env.setApiException(e);
         }
     }
 
-    @Then("^I receive a (\\d+) status code$")
-    public void i_receive_a_status_code(int status) throws Throwable {
-        assertEquals(status, apiStatusCode);
-    }
-
-    @Given("^A filled database$")
+    @Given("^A filled template database$")
     public void a_filled_database() throws Throwable {
         TemplateDto templateDto = new TemplateDto();
         templateDto.setName("test-templateDto");
@@ -74,7 +54,7 @@ public class CreationSteps {
 
     @Then("^I receive multiple template payloads$")
     public void i_receive_multiple_template_payloads() throws Throwable {
-        List<TemplateDto> templates = (List<TemplateDto>) apiResponse.getData();
+        List<TemplateDto> templates = (List<TemplateDto>) env.getApiResponse().getData();
         assertFalse(templates.isEmpty());
     }
 
@@ -86,18 +66,15 @@ public class CreationSteps {
     @When("^I GET on the /templates/id endpoint$")
     public void i_GET_on_the_templates_id_endpoint() throws Throwable {
         try {
-            apiResponse = api.templatesIdGetWithHttpInfo(templateId);
-            apiCallThrewException = false;
-            apiException = null;
-            apiStatusCode = apiResponse.getStatusCode();
+            env.setApiResponse(api.templatesIdGetWithHttpInfo(templateId));
         } catch (ApiException e) {
-            reset(e);
+            env.setApiException(e);
         }
     }
 
     @Then("^I receive a template payload$")
     public void i_receive_a_template_payload() throws Throwable {
-        TemplateDto templateDto = (TemplateDto) apiResponse.getData();
+        TemplateDto templateDto = (TemplateDto) env.getApiResponse().getData();
         assertNotNull(templateDto);
     }
 
@@ -112,12 +89,9 @@ public class CreationSteps {
     @When("^I POST the payload to the /templates endpoint$")
     public void i_POST_the_payload_to_the_templates_endpoint() throws Throwable {
         try {
-            apiResponse = api.templatesPostWithHttpInfo(templateDto);
-            apiCallThrewException = false;
-            apiException = null;
-            apiStatusCode = apiResponse.getStatusCode();
+            env.setApiResponse(api.templatesPostWithHttpInfo(templateDto));
         } catch (ApiException e) {
-            reset(e);
+            env.setApiException(e);
         }
     }
 
@@ -134,34 +108,21 @@ public class CreationSteps {
         templateId = 0;
     }
 
-    private void reset(ApiException e) {
-        apiCallThrewException = true;
-        apiResponse = null;
-        apiException = e;
-        apiStatusCode = e.getCode();
-    }
-
     @When("^I PUT on the /templates/id endpoint$")
     public void iPUTOnTheTemplatesIdEndpoint() throws Throwable {
         try {
-            apiResponse = api.templatesIdPutWithHttpInfo(templateId, templateDto);
-            apiCallThrewException = false;
-            apiException = null;
-            apiStatusCode = apiResponse.getStatusCode();
+            env.setApiResponse(api.templatesIdPutWithHttpInfo(templateId, templateDto));
         } catch (ApiException e) {
-            reset(e);
+            env.setApiException(e);
         }
     }
 
     @When("^I DELETE on the /templates/id endpoint$")
     public void iDELETEOnTheTemplatesIdEndpoint() throws Throwable {
         try {
-            apiResponse = api.templatesIdDeleteWithHttpInfo(templateId);
-            apiCallThrewException = false;
-            apiException = null;
-            apiStatusCode = apiResponse.getStatusCode();
+            env.setApiResponse(api.templatesIdDeleteWithHttpInfo(templateId));
         } catch (ApiException e) {
-            reset(e);
+            env.setApiException(e);
         }
     }
 }

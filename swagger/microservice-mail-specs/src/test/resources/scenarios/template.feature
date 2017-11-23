@@ -9,21 +9,21 @@ Feature: Creation of templates
     Then I receive a 204 status code
 
   Scenario: Fetch all templates
-    Given A filled database
+    Given A filled template database
     When I GET on the /templates endpoint
     Then I receive a 200 status code
     And I receive multiple template payloads
 
   Scenario: Fetch a template
     Given A template id
-    And A filled database
+    And A filled template database
     When I GET on the /templates/id endpoint
     Then I receive a 200 status code
     And I receive a template payload
 
   Scenario: Update a template
     Given A template id
-    And A filled database
+    And A filled template database
     And A template payload
     When I PUT on the /templates/id endpoint
     Then I receive a 200 status code
@@ -38,14 +38,14 @@ Feature: Creation of templates
 
   Scenario: Update with an invalid template
     Given A template id
-    And A filled database
+    And A filled template database
     And I have a bad template payload
     When I PUT on the /templates/id endpoint
     Then I receive a 406 status code
 
   Scenario: Delete an existing template
     Given A template id
-    And A filled database
+    And A filled template database
     When I DELETE on the /templates/id endpoint
     Then I receive a 200 status code
     When I GET on the /templates/id endpoint
