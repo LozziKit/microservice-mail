@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.validation.constraints.Null;
 import java.io.IOException;
 import java.util.List;
 
@@ -21,61 +20,53 @@ public class TemplatesApiController implements TemplatesApi {
     @Autowired
     private TemplateService templateService;
 
+    @Override
+    public ResponseEntity<TemplateDto> templatesPost(@RequestBody TemplateDto templateDto) {
+        try {
+            return new ResponseEntity<>(templateService.addTemplate(templateDto), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
+
     public ResponseEntity<List<TemplateDto>> templatesGet() {
         List<TemplateDto> templates = templateService.getAllTemplates();
 
         if (templates.isEmpty()) {
-            return new ResponseEntity<List<TemplateDto>>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
-        return new ResponseEntity<List<TemplateDto>>(templates, HttpStatus.OK);
+        return new ResponseEntity<>(templates, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<TemplateDto> templatesIdGet(@PathVariable Integer id) {
+        try {
+            return new ResponseEntity<>(templateService.getTemplateById(id), HttpStatus.OK);
+        } catch (NullPointerException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @Override
     public ResponseEntity<Void> templatesIdDelete(@PathVariable Integer id) {
         try {
             templateService.deleteTemplate(id);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
-        return new ResponseEntity<Void>(HttpStatus.OK);
-    }
-
-    @Override
-    public ResponseEntity<TemplateDto> templatesIdGet(@PathVariable Integer id) {
-        TemplateDto templateDto;
-
-        try {
-            templateDto = templateService.getTemplateById(id);
-        } catch (NullPointerException e) {
-            return new ResponseEntity<TemplateDto>(HttpStatus.NOT_FOUND);
-        }
-
-        return new ResponseEntity<TemplateDto>(templateDto, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Void> templatesIdPut(@PathVariable Integer id, @RequestBody TemplateDto templateDto) {
         try {
             templateService.updateTemplate(id, templateDto);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (NullPointerException e) {
-            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (IOException e) {
-            return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
-
-        return new ResponseEntity<Void>(HttpStatus.OK);
-    }
-
-    @Override
-    public ResponseEntity<Void> templatesPost(@RequestBody TemplateDto templateDto) {
-        try {
-            templateService.addTemplate(templateDto);
-        } catch (Exception e) {
-            return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
-        }
-
-        return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
 }

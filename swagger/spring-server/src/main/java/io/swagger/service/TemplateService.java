@@ -21,11 +21,22 @@ public class TemplateService {
     @Autowired
     private Configuration configuration;
 
-    public void addTemplate(TemplateDto templateDto) throws IOException {
+    public TemplateDto addTemplate(TemplateDto templateDto) throws IOException {
         TemplateEntity entity = new TemplateEntity(templateDto);
         validateTemplate(templateDto);
 
         templateRepository.save(entity);
+        return entity.getTemplateDto();
+    }
+
+    public List<TemplateDto> getAllTemplates() {
+        return templateRepository.findAll().stream()
+            .map(TemplateEntity::getTemplateDto)
+            .collect(Collectors.toList());
+    }
+
+    public TemplateDto getTemplateById(Integer id) {
+        return templateRepository.findOne(id).getTemplateDto();
     }
 
     public void updateTemplate(Integer id, TemplateDto templateDto) throws IOException {
@@ -41,16 +52,6 @@ public class TemplateService {
 
     public void deleteTemplate(Integer id) {
         templateRepository.delete(id);
-    }
-
-    public TemplateDto getTemplateById(Integer id) {
-        return templateRepository.findOne(id).getTemplateDto();
-    }
-
-    public List<TemplateDto> getAllTemplates() {
-        return templateRepository.findAll().stream()
-            .map(TemplateEntity::getTemplateDto)
-            .collect(Collectors.toList());
     }
 
     private void validateTemplate(TemplateDto templateDto) throws IOException {

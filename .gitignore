@@ -1,5 +1,5 @@
 # Do not send auto copied api-specs
-resources/api-spec.yaml
+api-spec.yaml
 
 # Created by https://www.gitignore.io/api/maven,intellij+iml,intellij+all
 
