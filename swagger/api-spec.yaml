@@ -2,49 +2,114 @@ swagger: "2.0"
 info:
     title: microservice-mail
     description: 'Mailing microservice for the AMT 2017 course @ HEIG-VD.'
-    version: 0.1.0
+    version: 0.2.0
 paths:
-#    /mails:
-#        get:
-#            tags:
-#                - mail
-#            description: Get the mail history.
-#            responses:
-#                '200':
-#                    description: Returned the history successfully.
-#                '204':
-#                    description: Mail history is empty.
-#        post:
-#            tags:
-#                - mail
-#            description: Send a mail (can use multiple payloads).
-#            responses:
-#                '201':
-#                    description: Mail sent successfully.
-#                '206':
-#                    description: Not all mails were able to be sent.
-#                '406':
-#                    description: Wrong formatting.
-#
-#    /mails/{id}:
-#        get:
-#            tags:
-#                - mail
-#            description: Get the status of a specified mail.
-#            responses:
-#                '200':
-#                    description: Returned the status successfully.
-#                '400':
-#                    description: Request malformed.
-#                '404':
-#                    description: Mail not found in history.
-#
-#        parameters:
-#            - in: path
-#              name: id
-#              description: The id of the mail we want to do something with.
-#              required: true
-#              type: integer
+    /mails:
+        get:
+            tags:
+                - mail
+            description: Get the mail history.
+            operationId: mailsGet
+            responses:
+                '200':
+                    description: Returned the history successfully.
+                    schema:
+                        type: array
+                        items:
+                            $ref: "#/definitions/ArchivedMailDto"
+                '204':
+                    description: Mail history is empty.
+        post:
+            tags:
+                - mail
+            description: Send a mail (can use multiple payloads).
+            operationId: mailsPost
+            responses:
+                '201':
+                    description: Mail job created successfully.
+                    schema:
+                        type: array
+                        items:
+                            $ref: '#/definitions/JobDto'
+                '400':
+                    description: DTO wasn't correct.
+            parameters:
+                - name: mailDto
+                  in: body
+                  schema:
+                    type: array
+                    items:
+                        $ref: "#/definitions/MailDto"
+
+    /mails/{id}:
+        get:
+            tags:
+                - mail
+            description: Get the specified archived mail.
+            operationId: mailsIdGet
+            responses:
+                '200':
+                    description: Returned the mail successfully.
+                    schema:
+                        $ref: "#/definitions/ArchivedMailDto"
+                '400':
+                    description: Request malformed.
+                '404':
+                    description: Mail not found in history.
+        parameters:
+            - in: path
+              name: id
+              description: The id of the mail we want to do something with.
+              required: true
+              type: integer
+
+    /jobs:
+        get:
+            tags:
+                - job
+            description: Get a list of all jobs.
+            operationId: jobsGet
+            responses:
+                '200':
+                    description: Returned the list succesfully.
+                    schema:
+                        type: array
+                        items:
+                            $ref: '#/definitions/JobDto'
+                '204':
+                    description: Job history is empty.
+
+    /jobs/{id}:
+        get:
+            tags:
+                - job
+            description: Get the specified job.
+            operationId: jobsIdGet
+            responses:
+                '200':
+                    description: Returned the job successfully
+                    schema:
+                        $ref: '#/definitions/JobDto'
+                '404':
+                    description: The job doesn't exist.
+        delete:
+            tags:
+                - job
+            description: Delete a job in progress.
+            operationId: jobsIdDelete
+            responses:
+                '204':
+                    description: Deleted the job successfully.
+                '404':
+                    description: The job doesn't exist.
+                '410':
+                    description: The job was already processed.
+        parameters:
+            - in: path
+              name: id
+              description: The id of the job we want to do something with.
+              required: true
+              type: integer
 
     /templates:
         get:
@@ -71,6 +136,8 @@ paths:
             responses:
                 '201':
                     description: Template has been created successfully.
+                    schema:
+                        $ref: '#/definitions/TemplateDto'
                 '406':
                     description: Invalid template.
             parameters:
@@ -98,8 +165,7 @@ paths:
             description: Update a specified template.
             operationId: templatesIdPut
             responses:
-            responses:
-                '200':
+                '204':
                     description: Updated the template successfully.
                 '404':
                     description: Template not found.
@@ -116,8 +182,7 @@ paths:
             description: Delete a specified template.
             operationId: templatesIdDelete
             responses:
-            responses:
-                '200':
+                '204':
                     description: Deleted the template successfully.
                 '404':
                     description: Template not found.
@@ -129,11 +194,60 @@ paths:
               type: integer
 
 definitions:
+    JobDto:
+        type: object
+        properties:
+            id:
+                type: integer
+            url:
+                type: string
+                format: url
+            status:
+                type: string
+                enum: ["DONE", "FAILED", "ONGOING", "INVALID"]
+
+    PayloadDto:
+        type: object
+        properties:
+            from:
+                type: string
+                format: email
+            to:
+                type: array
+                items:
+                    type: string
+                    format: email
+            cc:
+                type: array
+                items:
+                    type: string
+                    format: email
+            cci:
+                type: array
+                items:
+                    type: string
+                    format: email
+            map:
+                description: The key-values to input into the template.
+                type: object
+
     MailDto:
         type: object
         properties:
             id:
                 type: integer
+            templateId:
+                type: integer
+            payload:
+                $ref: "#/definitions/PayloadDto"
+
+    ArchivedMailDto:
+        allOf:
+            - $ref: "#/definitions/MailDto"
+            - type: object
+              properties:
+                  effectiveContent:
+                      type: string
 
     TemplateDto:
         type: object
