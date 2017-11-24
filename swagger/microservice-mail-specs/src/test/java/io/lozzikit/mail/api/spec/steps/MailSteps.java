@@ -55,8 +55,8 @@ public class MailSteps {
         }
     }
 
-    @Given("^A filled mail database$")
-    public void aFilledMailDatabase() throws Throwable {
+    @Given("^A filled job and mail database$")
+    public void aFilledJobAndMailDatabase() throws Throwable {
         final String from = "z.z@z.org";
 
         List<MailDto> mailDtoList = new ArrayList<>();
@@ -64,6 +64,7 @@ public class MailSteps {
         PayloadDto payloadDto = new PayloadDto();
         payloadDto.setFrom(from);
         payloadDto.addToItem("y.y@y.org");
+        payloadDto.putMapItem("firstname", "y");
 
         MailDto mailDto = new MailDto();
         mailDto.setTemplateId(2);
@@ -73,6 +74,7 @@ public class MailSteps {
         payloadDto = new PayloadDto();
         payloadDto.setFrom(from);
         payloadDto.addToItem("x.x@x.org");
+        payloadDto.putMapItem("firstname", "x");
 
         mailDto = new MailDto();
         mailDto.setTemplateId(2);
@@ -97,6 +99,7 @@ public class MailSteps {
         PayloadDto payloadDto = new PayloadDto();
         payloadDto.setFrom(from);
         payloadDto.addToItem("b.b@b.org");
+        payloadDto.putMapItem("firstname", "b");
 
         MailDto mailDto = new MailDto();
         mailDto.setTemplateId(1);
@@ -106,6 +109,7 @@ public class MailSteps {
         payloadDto = new PayloadDto();
         payloadDto.setFrom(from);
         payloadDto.addToItem("c.c@c.org");
+        payloadDto.putMapItem("firstname", "c");
 
         mailDto = new MailDto();
         mailDto.setTemplateId(1);
@@ -125,6 +129,7 @@ public class MailSteps {
     @And("^I receive a list of jobs payload$")
     public void iReceiveAListOfJobPayload() throws Throwable {
         List<JobDto> jobs = (List<JobDto>) env.getApiResponse().getData();
+        assertNotNull(jobs);
         assertFalse(jobs.isEmpty());
     }
 
@@ -160,12 +165,6 @@ public class MailSteps {
         } catch (ApiException e) {
             env.setApiException(e);
         }
-    }
-
-    @Given("^A filled jobs database$")
-    public void aFilledJobsDatabase() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
     }
 
     @Given("^A job id$")
@@ -204,6 +203,12 @@ public class MailSteps {
 
     @Given("^A processed job id$")
     public void aProcessedJobId() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @Given("^An in-progress job id$")
+    public void anInProgressJobId() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
     }

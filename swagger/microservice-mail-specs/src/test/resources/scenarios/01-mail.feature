@@ -11,7 +11,7 @@ Feature: Manipulation of mails
     Then I receive a 204 status code
 
   Scenario: Fetch all archived mails
-    Given A filled mail database
+    Given A filled job and mail database
     When I GET on the /mails endpoint
     Then I receive a 200 status code
     And I receive a list of mails payload
@@ -24,7 +24,7 @@ Feature: Manipulation of mails
 
   Scenario: Fetch an archived mail
     Given A mail id
-    And A filled mail database
+    And A filled job and mail database
     When I GET on the /mails/id endpoint
     Then I receive a 200 status code
     And I receive a archived mail payload
@@ -40,14 +40,14 @@ Feature: Manipulation of mails
     Then I receive a 204 status code
 
   Scenario: Fetch all jobs
-    Given A filled jobs database
+    Given A filled job and mail database
     When I GET on the /jobs endpoint
     Then I receive a 200 status code
     And I receive a list of jobs payload
 
   Scenario: Fetch a job
     Given A job id
-    And A filled jobs database
+    And A filled job and mail database
     When I GET on the /jobs/id endpoint
     Then I receive a 200 status code
     And I receive a job payload
@@ -58,8 +58,8 @@ Feature: Manipulation of mails
     Then I receive a 404 status code
 
   Scenario: Delete a job in progress
-    Given A non-existing job id
-    And A filled jobs database
+    Given An in-progress job id
+    And A filled job and mail database
     When I DELETE on the /jobs/id endpoint
     Then I receive a 204 status code
 
@@ -70,6 +70,6 @@ Feature: Manipulation of mails
 
   Scenario: Delete an already processed job
     Given A processed job id
-    And A filled jobs database
+    And A filled job and mail database
     When I DELETE on the /jobs/id endpoint
     Then I receive a 410 status code

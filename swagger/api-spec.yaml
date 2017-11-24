@@ -230,6 +230,8 @@ definitions:
             map:
                 description: The key-values to input into the template.
                 type: object
+                additionalProperties:
+                  type: string
 
     MailDto:
         type: object
