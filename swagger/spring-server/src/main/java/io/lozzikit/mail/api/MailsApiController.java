@@ -1,10 +1,9 @@
-package io.swagger.api;
+package io.lozzikit.mail.api;
 
-import io.lozzikit.mail.api.MailsApi;
 import io.lozzikit.mail.api.model.ArchivedMailDto;
 import io.lozzikit.mail.api.model.JobDto;
 import io.lozzikit.mail.api.model.MailDto;
-import io.swagger.service.MailService;
+import io.lozzikit.mail.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

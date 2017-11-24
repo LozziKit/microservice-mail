@@ -1,8 +1,7 @@
-package io.swagger.api;
+package io.lozzikit.mail.api;
 
-import io.lozzikit.mail.api.TemplatesApi;
 import io.lozzikit.mail.api.model.TemplateDto;
-import io.swagger.service.TemplateService;
+import io.lozzikit.mail.service.TemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

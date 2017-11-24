@@ -18,9 +18,6 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by Olivier Liechti on 27/07/17.
- */
 public class MailSteps {
     private Environment env;
     private MailApi mailApi;

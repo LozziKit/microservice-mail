@@ -1,4 +1,4 @@
-package io.swagger.entity;
+package io.lozzikit.mail.entity;
 
 import io.lozzikit.mail.api.model.PayloadDto;
 

@@ -1,10 +1,11 @@
-package io.swagger.service;
+package io.lozzikit.mail.service;
 
 import io.lozzikit.mail.api.model.ArchivedMailDto;
 import io.lozzikit.mail.api.model.JobDto;
 import io.lozzikit.mail.api.model.MailDto;
-import io.swagger.entity.MailEntity;
-import io.swagger.repository.MailRepository;
+import io.lozzikit.mail.entity.MailEntity;
+import io.lozzikit.mail.repository.MailRepository;
+import io.lozzikit.mail.smtp.SmtpMailer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,9 @@ import java.util.stream.Collectors;
 public class MailService {
     @Autowired
     private MailRepository mailRepository;
+
+    @Autowired
+    private SmtpMailer mailer;
 
     public List<JobDto> sendMail(List<MailDto> mails) {
         return null;

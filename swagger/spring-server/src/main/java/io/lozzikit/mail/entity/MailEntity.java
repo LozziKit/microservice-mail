@@ -1,7 +1,6 @@
-package io.swagger.entity;
+package io.lozzikit.mail.entity;
 
 import io.lozzikit.mail.api.model.ArchivedMailDto;
-import io.lozzikit.mail.api.model.MailDto;
 
 import javax.persistence.*;
 

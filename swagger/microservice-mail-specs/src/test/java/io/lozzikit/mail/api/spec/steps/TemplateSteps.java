@@ -12,9 +12,6 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by Olivier Liechti on 27/07/17.
- */
 public class TemplateSteps {
     private Environment env;
     private TemplateApi api;
@@ -28,12 +25,12 @@ public class TemplateSteps {
     }
 
     @Given("^A template endpoint$")
-    public void a_template_endpoint() throws Throwable {
+    public void aTemplateEndpoint() throws Throwable {
         assertNotNull(api);
     }
 
     @When("^I GET on the /templates endpoint$")
-    public void i_GET_on_the_templates_endpoint() throws Throwable {
+    public void iGETOnTheTemplatesEndpoint() throws Throwable {
         try {
             env.setApiResponse(api.templatesGetWithHttpInfo());
         } catch (ApiException e) {
@@ -42,7 +39,7 @@ public class TemplateSteps {
     }
 
     @Given("^A filled template database$")
-    public void a_filled_database() throws Throwable {
+    public void aFilledDatabase() throws Throwable {
         TemplateDto templateDto = new TemplateDto();
         templateDto.setName("test-templateDto");
         templateDto.setDescription("A templateDto for testing using cucumber");
@@ -53,18 +50,18 @@ public class TemplateSteps {
     }
 
     @Then("^I receive multiple template payloads$")
-    public void i_receive_multiple_template_payloads() throws Throwable {
+    public void iReceiveMultipleTemplatePayloads() throws Throwable {
         List<TemplateDto> templates = (List<TemplateDto>) env.getApiResponse().getData();
         assertFalse(templates.isEmpty());
     }
 
     @Given("^A template id$")
-    public void a_template_id() throws Throwable {
+    public void aTemplateId() throws Throwable {
         templateId = 1;
     }
 
     @When("^I GET on the /templates/id endpoint$")
-    public void i_GET_on_the_templates_id_endpoint() throws Throwable {
+    public void iGETOnTheTemplatesIdEndpoint() throws Throwable {
         try {
             env.setApiResponse(api.templatesIdGetWithHttpInfo(templateId));
         } catch (ApiException e) {
@@ -73,13 +70,13 @@ public class TemplateSteps {
     }
 
     @Then("^I receive a template payload$")
-    public void i_receive_a_template_payload() throws Throwable {
+    public void iReceiveATemplatePayload() throws Throwable {
         TemplateDto templateDto = (TemplateDto) env.getApiResponse().getData();
         assertNotNull(templateDto);
     }
 
     @Given("^A template payload$")
-    public void a_template_payload() throws Throwable {
+    public void aTemplatePayload() throws Throwable {
         templateDto = new TemplateDto();
         templateDto.setName("test-templateDto");
         templateDto.setDescription("A templateDto for testing using cucumber");
@@ -87,7 +84,7 @@ public class TemplateSteps {
     }
 
     @When("^I POST the payload to the /templates endpoint$")
-    public void i_POST_the_payload_to_the_templates_endpoint() throws Throwable {
+    public void iPOSTThePayloadToTheTemplatesEndpoint() throws Throwable {
         try {
             env.setApiResponse(api.templatesPostWithHttpInfo(templateDto));
         } catch (ApiException e) {
@@ -96,7 +93,7 @@ public class TemplateSteps {
     }
 
     @Given("^I have a bad template payload$")
-    public void i_have_a_bad_template_payload() throws Throwable {
+    public void iHaveABadTemplatePayload() throws Throwable {
         templateDto = new TemplateDto();
         templateDto.setName("test-templateDto");
         templateDto.setDescription("A templateDto for testing using cucumber");
@@ -104,7 +101,7 @@ public class TemplateSteps {
     }
 
     @Given("^A non-existing template id$")
-    public void a_non_existing_template_id() throws Throwable {
+    public void aNonExistingTemplateId() throws Throwable {
         templateId = 0;
     }
 

@@ -1,6 +1,5 @@
-package io.swagger.api;
+package io.lozzikit.mail.api;
 
-import io.lozzikit.mail.api.JobsApi;
 import io.lozzikit.mail.api.model.JobDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

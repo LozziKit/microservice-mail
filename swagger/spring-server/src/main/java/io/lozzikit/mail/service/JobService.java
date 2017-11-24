@@ -1,6 +1,6 @@
-package io.swagger.service;
+package io.lozzikit.mail.service;
 
-import io.swagger.repository.JobRepository;
+import io.lozzikit.mail.repository.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

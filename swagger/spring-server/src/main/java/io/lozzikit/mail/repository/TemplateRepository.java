@@ -1,6 +1,6 @@
-package io.swagger.repository;
+package io.lozzikit.mail.repository;
 
-import io.swagger.entity.TemplateEntity;
+import io.lozzikit.mail.entity.TemplateEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

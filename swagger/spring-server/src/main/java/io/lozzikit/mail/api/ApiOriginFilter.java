@@ -1,4 +1,4 @@
-package io.swagger.api;
+package io.lozzikit.mail.api;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletResponse;

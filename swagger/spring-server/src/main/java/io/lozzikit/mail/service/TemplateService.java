@@ -1,10 +1,10 @@
-package io.swagger.service;
+package io.lozzikit.mail.service;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import io.lozzikit.mail.api.model.TemplateDto;
-import io.swagger.entity.TemplateEntity;
-import io.swagger.repository.TemplateRepository;
+import io.lozzikit.mail.entity.TemplateEntity;
+import io.lozzikit.mail.repository.TemplateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
