@@ -1,4 +1,4 @@
-package io.lozzikit.mail.config;
+package io.lozzikit.mail.configuration;
 
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapperBuilder;
