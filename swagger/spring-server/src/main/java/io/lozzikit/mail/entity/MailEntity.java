@@ -4,6 +4,8 @@ import io.lozzikit.mail.api.model.ArchivedMailDto;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "mails")
@@ -14,7 +16,13 @@ public class MailEntity {
 
     private Integer id;
     private String templateName;
-    private PayloadEntity payload;
+
+    private String from;
+    private List<String> to;
+    private List<String> cc;
+    private List<String> cci;
+    private Map<String, String> map;
+
     private String effectiveContent;
 
     @Id
@@ -37,13 +45,57 @@ public class MailEntity {
         this.templateName = templateName;
     }
 
-    @OneToOne
-    public PayloadEntity getPayload() {
-        return payload;
+    @Column(name = "mail_from")
+    public String getFrom() {
+        return from;
     }
 
-    public void setPayload(PayloadEntity payload) {
-        this.payload = payload;
+    public void setFrom(String from) {
+        this.from = from;
+    }
+
+    @ElementCollection
+    @CollectionTable(name = "mail_to")
+    @Column(name = "to")
+    public List<String> getTo() {
+        return to;
+    }
+
+    public void setTo(List<String> to) {
+        this.to = to;
+    }
+
+    @ElementCollection
+    @CollectionTable(name = "mail_cc")
+    @Column(name = "cc")
+    public List<String> getCc() {
+        return cc;
+    }
+
+    public void setCc(List<String> cc) {
+        this.cc = cc;
+    }
+
+    @ElementCollection
+    @CollectionTable(name = "mail_cci")
+    @Column(name = "cci")
+    public List<String> getCci() {
+        return cci;
+    }
+
+    public void setCci(List<String> cci) {
+        this.cci = cci;
+    }
+
+    @ElementCollection
+    @CollectionTable(name = "mail_map")
+    @Column(name = "map")
+    public Map<String, String> getMap() {
+        return map;
+    }
+
+    public void setMap(Map<String, String> map) {
+        this.map = map;
     }
 
     @Column(name = "effective")
@@ -60,7 +112,11 @@ public class MailEntity {
         ArchivedMailDto archivedMailDto = new ArchivedMailDto();
         archivedMailDto.setUrl(contextPath + "/mails/" + id);
         archivedMailDto.setTemplateName(templateName);
-        archivedMailDto.setPayload(payload.getPayloadDto());
+        archivedMailDto.setFrom(from);
+        archivedMailDto.setTo(to);
+        archivedMailDto.setCc(cc);
+        archivedMailDto.setCci(cci);
+        archivedMailDto.setMap(map);
         archivedMailDto.setEffectiveContent(effectiveContent);
 
         return archivedMailDto;

@@ -61,24 +61,18 @@ public class MailSteps {
 
         List<MailDto> mailDtoList = new ArrayList<>();
 
-        PayloadDto payloadDto = new PayloadDto();
-        payloadDto.setFrom(from);
-        payloadDto.addToItem("y.y@y.org");
-        payloadDto.putMapItem("firstname", "y");
-
         MailDto mailDto = new MailDto();
         mailDto.setTemplateName("test-template-2");
-        mailDto.setPayload(payloadDto);
+        mailDto.setFrom(from);
+        mailDto.addToItem("y.y@y.org");
+        mailDto.putMapItem("firstname", "y");
         mailDtoList.add(mailDto);
-
-        payloadDto = new PayloadDto();
-        payloadDto.setFrom(from);
-        payloadDto.addToItem("x.x@x.org");
-        payloadDto.putMapItem("firstname", "x");
 
         mailDto = new MailDto();
         mailDto.setTemplateName("test-template-2");
-        mailDto.setPayload(payloadDto);
+        mailDto.setFrom(from);
+        mailDto.addToItem("x.x@x.org");
+        mailDto.putMapItem("firstname", "x");
         mailDtoList.add(mailDto);
 
         mailApi.mailsPost(mailDtoList);
@@ -96,24 +90,18 @@ public class MailSteps {
 
         this.mailDtoList = new ArrayList<>();
 
-        PayloadDto payloadDto = new PayloadDto();
-        payloadDto.setFrom(from);
-        payloadDto.addToItem("b.b@b.org");
-        payloadDto.putMapItem("firstname", "b");
-
         MailDto mailDto = new MailDto();
         mailDto.setTemplateName("test-template-1");
-        mailDto.setPayload(payloadDto);
+        mailDto.setFrom(from);
+        mailDto.addToItem("b.b@b.org");
+        mailDto.putMapItem("firstname", "b");
         this.mailDtoList.add(mailDto);
-
-        payloadDto = new PayloadDto();
-        payloadDto.setFrom(from);
-        payloadDto.addToItem("c.c@c.org");
-        payloadDto.putMapItem("firstname", "c");
 
         mailDto = new MailDto();
         mailDto.setTemplateName("test-template-1");
-        mailDto.setPayload(payloadDto);
+        mailDto.setFrom(from);
+        mailDto.addToItem("c.c@c.org");
+        mailDto.putMapItem("firstname", "c");
         this.mailDtoList.add(mailDto);
     }
 

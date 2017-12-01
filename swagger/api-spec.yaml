@@ -210,6 +210,12 @@ definitions:
     PayloadDto:
         type: object
         properties:
+
+    MailDto:
+        type: object
+        properties:
+            templateName:
+                type: string
             from:
                 type: string
                 format: email
@@ -233,14 +239,6 @@ definitions:
                 type: object
                 additionalProperties:
                   type: string
-
-    MailDto:
-        type: object
-        properties:
-            templateName:
-                type: string
-            payload:
-                $ref: "#/definitions/PayloadDto"
 
     ArchivedMailDto:
         allOf:
