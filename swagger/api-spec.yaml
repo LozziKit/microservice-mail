@@ -146,12 +146,12 @@ paths:
                   schema:
                     $ref: "#/definitions/TemplateDto"
 
-    /templates/{id}:
+    /templates/{name}:
         get:
             tags:
                 - template
             description: Get a specified template.
-            operationId: templatesIdGet
+            operationId: templatesNameGet
             responses:
                 '200':
                     description: Returned the template successfully.
@@ -163,7 +163,7 @@ paths:
             tags:
                 - template
             description: Update a specified template.
-            operationId: templatesIdPut
+            operationId: templatesNamePut
             responses:
                 '204':
                     description: Updated the template successfully.
@@ -180,26 +180,27 @@ paths:
             tags:
                 - template
             description: Delete a specified template.
-            operationId: templatesIdDelete
+            operationId: templatesNameDelete
             responses:
                 '204':
                     description: Deleted the template successfully.
                 '404':
                     description: Template not found.
         parameters:
-            - name: id
+            - name: name
               in: path
-              description: The id of the template we want to do something with.
+              description: The name of the template we want to do something with.
               required: true
-              type: integer
+              type: string
 
 definitions:
     JobDto:
         type: object
         properties:
-            id:
-                type: integer
             url:
+                type: string
+                format: url
+            mail:
                 type: string
                 format: url
             status:
@@ -236,10 +237,8 @@ definitions:
     MailDto:
         type: object
         properties:
-            id:
-                type: integer
-            templateId:
-                type: integer
+            templateName:
+                type: string
             payload:
                 $ref: "#/definitions/PayloadDto"
 
@@ -248,14 +247,18 @@ definitions:
             - $ref: "#/definitions/MailDto"
             - type: object
               properties:
+                  url:
+                      type: string
+                      format: url
                   effectiveContent:
                       type: string
 
     TemplateDto:
         type: object
         properties:
-            id:
-                type: integer
+            url:
+                type: string
+                format: url
             name:
                 type: string
             description:

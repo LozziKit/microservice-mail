@@ -39,18 +39,18 @@ public class TemplatesApiController implements TemplatesApi {
     }
 
     @Override
-    public ResponseEntity<TemplateDto> templatesIdGet(@PathVariable Integer id) {
+    public ResponseEntity<TemplateDto> templatesNameGet(@PathVariable String name) {
         try {
-            return new ResponseEntity<>(templateService.getTemplateById(id), HttpStatus.OK);
+            return new ResponseEntity<>(templateService.getTemplateByName(name), HttpStatus.OK);
         } catch (NullPointerException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     @Override
-    public ResponseEntity<Void> templatesIdDelete(@PathVariable Integer id) {
+    public ResponseEntity<Void> templatesNameDelete(@PathVariable String name) {
         try {
-            templateService.deleteTemplate(id);
+            templateService.deleteTemplate(name);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -58,9 +58,9 @@ public class TemplatesApiController implements TemplatesApi {
     }
 
     @Override
-    public ResponseEntity<Void> templatesIdPut(@PathVariable Integer id, @RequestBody TemplateDto templateDto) {
+    public ResponseEntity<Void> templatesNamePut(@PathVariable String name, @RequestBody TemplateDto templateDto) {
         try {
-            templateService.updateTemplate(id, templateDto);
+            templateService.updateTemplate(name, templateDto);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (NullPointerException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

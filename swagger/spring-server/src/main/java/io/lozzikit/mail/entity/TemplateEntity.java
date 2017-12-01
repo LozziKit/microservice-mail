@@ -1,6 +1,7 @@
 package io.lozzikit.mail.entity;
 
 import io.lozzikit.mail.api.model.TemplateDto;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 
@@ -11,6 +12,9 @@ public class TemplateEntity {
     private String name;
     private String description;
     private String content;
+
+    @Value("${server.contextPath}")
+    private String contextPath;
 
     public TemplateEntity() {
     }
@@ -32,7 +36,7 @@ public class TemplateEntity {
         this.id = id;
     }
 
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     public String getName() {
         return name;
     }
@@ -62,7 +66,7 @@ public class TemplateEntity {
     @Transient
     public TemplateDto getTemplateDto() {
         TemplateDto templateDto = new TemplateDto();
-        templateDto.setId(id);
+        templateDto.setUrl(contextPath + "/templates/" + id);
         templateDto.setName(name);
         templateDto.setDescription(description);
         templateDto.setContent(content);

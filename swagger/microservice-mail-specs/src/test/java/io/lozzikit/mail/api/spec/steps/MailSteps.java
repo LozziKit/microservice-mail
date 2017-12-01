@@ -67,7 +67,7 @@ public class MailSteps {
         payloadDto.putMapItem("firstname", "y");
 
         MailDto mailDto = new MailDto();
-        mailDto.setTemplateId(2);
+        mailDto.setTemplateName("test-template-2");
         mailDto.setPayload(payloadDto);
         mailDtoList.add(mailDto);
 
@@ -77,7 +77,7 @@ public class MailSteps {
         payloadDto.putMapItem("firstname", "x");
 
         mailDto = new MailDto();
-        mailDto.setTemplateId(2);
+        mailDto.setTemplateName("test-template-2");
         mailDto.setPayload(payloadDto);
         mailDtoList.add(mailDto);
 
@@ -102,7 +102,7 @@ public class MailSteps {
         payloadDto.putMapItem("firstname", "b");
 
         MailDto mailDto = new MailDto();
-        mailDto.setTemplateId(1);
+        mailDto.setTemplateName("test-template-1");
         mailDto.setPayload(payloadDto);
         this.mailDtoList.add(mailDto);
 
@@ -112,7 +112,7 @@ public class MailSteps {
         payloadDto.putMapItem("firstname", "c");
 
         mailDto = new MailDto();
-        mailDto.setTemplateId(1);
+        mailDto.setTemplateName("test-template-1");
         mailDto.setPayload(payloadDto);
         this.mailDtoList.add(mailDto);
     }

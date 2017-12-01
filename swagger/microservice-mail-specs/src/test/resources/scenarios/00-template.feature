@@ -15,45 +15,45 @@ Feature: Creation of templates
     And I receive multiple template payloads
 
   Scenario: Fetch a template
-    Given A template id
+    Given An existing template name
     And A filled template database
-    When I GET on the /templates/id endpoint
+    When I GET on the /templates/name endpoint
     Then I receive a 200 status code
     And I receive a template payload
 
   Scenario: Update a template
-    Given A template id
+    Given An existing template name
     And A filled template database
     And A template payload
-    When I PUT on the /templates/id endpoint
+    When I PUT on the /templates/name endpoint
     Then I receive a 200 status code
-    When I GET on the /templates/id endpoint
+    When I GET on the /templates/name endpoint
     Then I receive a 200 status code
 
   Scenario: Update a non existing template
-    Given A non-existing template id
+    Given A non-existing template name
     And A template payload
-    When I PUT on the /templates/id endpoint
+    When I PUT on the /templates/name endpoint
     Then I receive a 404 status code
 
   Scenario: Update with an invalid template
-    Given A template id
+    Given An existing template name
     And A filled template database
     And I have a bad template payload
-    When I PUT on the /templates/id endpoint
+    When I PUT on the /templates/name endpoint
     Then I receive a 406 status code
 
   Scenario: Delete an existing template
-    Given A template id
+    Given An existing template name
     And A filled template database
-    When I DELETE on the /templates/id endpoint
+    When I DELETE on the /templates/name endpoint
     Then I receive a 200 status code
-    When I GET on the /templates/id endpoint
+    When I GET on the /templates/name endpoint
     Then I receive a 404 status code
 
   Scenario: Delete a non existing template
-    Given A non-existing template id
-    When I DELETE on the /templates/id endpoint
+    Given A non-existing template name
+    When I DELETE on the /templates/name endpoint
     Then I receive a 404 status code
 
   Scenario: Create a template
@@ -67,6 +67,6 @@ Feature: Creation of templates
     Then I receive a 406 status code
 
   Scenario: Fetch an non-existing template
-    Given A non-existing template id
-    When I GET on the /templates/id endpoint
+    Given A non-existing template name
+    When I GET on the /templates/name endpoint
     Then I receive a 404 status code

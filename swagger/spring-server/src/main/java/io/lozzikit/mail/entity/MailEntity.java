@@ -1,14 +1,19 @@
 package io.lozzikit.mail.entity;
 
 import io.lozzikit.mail.api.model.ArchivedMailDto;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "mails")
 public class MailEntity {
+
+    @Value("${server.contextPath}")
+    private String contextPath;
+
     private Integer id;
-    private Integer templateId;
+    private String templateName;
     private PayloadEntity payload;
     private String effectiveContent;
 
@@ -23,13 +28,13 @@ public class MailEntity {
         this.id = id;
     }
 
-    @Column(name = "template_id")
-    public Integer getTemplateId() {
-        return templateId;
+    @Column(name = "template_name")
+    public String getTemplateName() {
+        return templateName;
     }
 
-    public void setTemplateId(Integer templateId) {
-        this.templateId = templateId;
+    public void setTemplateName(String templateName) {
+        this.templateName = templateName;
     }
 
     @OneToOne
@@ -53,8 +58,8 @@ public class MailEntity {
     @Transient
     public ArchivedMailDto getArchivedMailDto() {
         ArchivedMailDto archivedMailDto = new ArchivedMailDto();
-        archivedMailDto.setId(id);
-        archivedMailDto.setTemplateId(templateId);
+        archivedMailDto.setUrl(contextPath + "/mails/" + id);
+        archivedMailDto.setTemplateName(templateName);
         archivedMailDto.setPayload(payload.getPayloadDto());
         archivedMailDto.setEffectiveContent(effectiveContent);
 

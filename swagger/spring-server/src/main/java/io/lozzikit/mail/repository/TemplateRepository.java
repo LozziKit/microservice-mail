@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository
 public interface TemplateRepository extends JpaRepository<TemplateEntity, Integer> {
-    List<TemplateEntity> findByName(String name);
+    TemplateEntity findOneByName(String name);
+    void deleteOneByName(String name);
 }

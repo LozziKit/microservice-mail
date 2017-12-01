@@ -39,19 +39,23 @@ public class TemplateService {
         return templateRepository.findOne(id).getTemplateDto();
     }
 
-    public void updateTemplate(Integer id, TemplateDto templateDto) throws IOException {
+    public TemplateDto getTemplateByName(String name) {
+        return templateRepository.findOneByName(name).getTemplateDto();
+    }
+
+    public void updateTemplate(String name, TemplateDto templateDto) throws IOException {
         validateTemplate(templateDto);
 
-        TemplateEntity entity = templateRepository.findOne(id);
-        entity.setName(templateDto.getName());
+        TemplateEntity entity = templateRepository.findOneByName(name);
         entity.setDescription(templateDto.getDescription());
         entity.setContent(templateDto.getContent());
 
         templateRepository.save(entity);
     }
 
-    public void deleteTemplate(Integer id) {
-        templateRepository.delete(id);
+    public void deleteTemplate(String name) {
+        TemplateEntity entity = templateRepository.findOneByName(name);
+        templateRepository.delete(entity);
     }
 
     private void validateTemplate(TemplateDto templateDto) throws IOException {
