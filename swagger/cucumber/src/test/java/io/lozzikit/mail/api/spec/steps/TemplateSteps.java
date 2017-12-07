@@ -10,15 +10,16 @@ import io.lozzikit.mail.api.spec.helpers.Environment;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 
 public class TemplateSteps {
+    private static int templateNum = 0;
+
     private Environment env;
     private TemplateApi api;
-
     private TemplateDto templateDto;
     private String templateName;
-    private static int templateNum = 0;
 
     public TemplateSteps(Environment environment) {
         this.env = environment;
@@ -50,6 +51,7 @@ public class TemplateSteps {
         api.templatesPost(templateDto);
     }
 
+    @SuppressWarnings("unchecked")
     @Then("^I receive multiple template payloads$")
     public void iReceiveMultipleTemplatePayloads() throws Throwable {
         List<TemplateDto> templates = (List<TemplateDto>) env.getApiResponse().getData();

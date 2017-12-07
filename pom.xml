@@ -8,7 +8,8 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>swagger/cucumber</module>
+        <!-- <module>swagger/database</module> -->
         <module>swagger/spring-server</module>
-        <module>swagger/microservice-mail-specs</module>
     </modules>
 </project>

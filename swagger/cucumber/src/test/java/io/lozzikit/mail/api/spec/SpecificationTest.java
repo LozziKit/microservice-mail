@@ -2,6 +2,8 @@ package io.lozzikit.mail.api.spec;
 
 import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
+import org.junit.runner.Computer;
+import org.junit.runner.JUnitCore;
 import org.junit.runner.RunWith;
 
 /**

@@ -13,7 +13,6 @@ import java.util.Properties;
  * Created by Olivier Liechti on 24/06/17.
  */
 public class Environment {
-
     // Api
     private TemplateApi templateApi = new TemplateApi();
     private MailApi mailApi = new MailApi();
@@ -31,7 +30,6 @@ public class Environment {
         templateApi.getApiClient().setBasePath(url);
         mailApi.getApiClient().setBasePath(url);
         jobApi.getApiClient().setBasePath(url);
-
     }
 
     public TemplateApi getTemplateApi() {

@@ -78,6 +78,7 @@ public class MailSteps {
         mailApi.mailsPost(mailDtoList);
     }
 
+    @SuppressWarnings("unchecked")
     @And("^I receive a list of mails payload$")
     public void iReceiveMultipleMailPayloads() throws Throwable {
         List<ArchivedMailDto> archivedMails = (List<ArchivedMailDto>) env.getApiResponse().getData();
@@ -114,6 +115,7 @@ public class MailSteps {
         }
     }
 
+    @SuppressWarnings("unchecked")
     @And("^I receive a list of jobs payload$")
     public void iReceiveAListOfJobPayload() throws Throwable {
         List<JobDto> jobs = (List<JobDto>) env.getApiResponse().getData();
