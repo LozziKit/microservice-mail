@@ -4,7 +4,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import io.lozzikit.mail.api.spec.helpers.Environment;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class ApiSteps {
     private Environment env;

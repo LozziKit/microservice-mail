@@ -205,7 +205,7 @@ definitions:
                 format: url
             status:
                 type: string
-                enum: ["DONE", "FAILED", "ONGOING", "INVALID"]
+                description: Can be any of ["DONE", "FAILED", "ONGOING", "INVALID"]
 
     PayloadDto:
         type: object

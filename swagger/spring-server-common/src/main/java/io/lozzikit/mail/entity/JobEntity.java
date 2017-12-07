@@ -1,7 +1,6 @@
 package io.lozzikit.mail.entity;
 
-import io.lozzikit.mail.api.model.JobDto;
-import io.lozzikit.mail.api.model.JobDto.StatusEnum;
+import io.lozzikit.mail.model.StatusEnum;
 
 import javax.persistence.*;
 

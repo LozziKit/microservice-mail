@@ -2,7 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.lozzikit</groupId>
-    <artifactId>microservice-mail-server</artifactId>
+    <artifactId>microservice-mail-server-test</artifactId>
     <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
 
@@ -53,7 +53,7 @@
                 <artifactId>dockerfile-maven-plugin</artifactId>
                 <version>1.3.6</version>
                 <configuration>
-                    <repository>lozzikit-microservice-mail/server</repository>
+                    <repository>lozzikit-microservice-mail/server-test</repository>
                     <tag>latest</tag>
                 </configuration>
                 <executions>
@@ -63,55 +63,6 @@
                         <goals>
                             <goal>build</goal>
                         </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>io.swagger</groupId>
-                <artifactId>swagger-codegen-maven-plugin</artifactId>
-                <version>2.2.2</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <inputSpec>${project.basedir}/src/main/resources/api-spec.yaml</inputSpec>
-                            <language>spring</language>
-                            <configOptions>
-                                <useBeanValidation>true</useBeanValidation>
-                                <interfaceOnly>true</interfaceOnly>
-                                <delegatePattern>false</delegatePattern>
-                                <basePackage>io.lozzikit.mail</basePackage>
-                                <apiPackage>io.lozzikit.mail.api</apiPackage>
-                                <configPackage>io.lozzikit.mail.config</configPackage>
-                                <modelPackage>io.lozzikit.mail.api.model</modelPackage>
-                            </configOptions>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>3.0.1</version>
-                <executions>
-                    <execution>
-                        <id>copy-resources</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.basedir}/src/main/resources/</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>${project.basedir}/../</directory>
-                                    <includes>
-                                        <include>api-spec.yaml</include>
-                                    </includes>
-                                </resource>
-                            </resources>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -146,25 +97,6 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>6.0.6</version>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>${springfox-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>${springfox-version}</version>
-        </dependency>
-        <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-joda</artifactId>
         </dependency>
@@ -172,16 +104,5 @@
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.freemarker</groupId>
-            <artifactId>freemarker</artifactId>
-            <version>2.3.23</version>
-        </dependency>
-        <dependency>
-            <groupId>org.modelmapper</groupId>
-            <artifactId>modelmapper</artifactId>
-            <version>1.1.1</version>
-        </dependency>
-
     </dependencies>
 </project>

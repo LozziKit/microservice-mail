@@ -3,9 +3,9 @@ package io.lozzikit.mail.service;
 import io.lozzikit.mail.api.model.ArchivedMailDto;
 import io.lozzikit.mail.api.model.JobDto;
 import io.lozzikit.mail.api.model.MailDto;
-import io.lozzikit.mail.entity.MailEntity;
 import io.lozzikit.mail.repository.MailRepository;
 import io.lozzikit.mail.smtp.SmtpMailer;
+import io.lozzikit.mail.util.DtoFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,11 +26,11 @@ public class MailService {
 
     public List<ArchivedMailDto> getAllMails() {
         return mailRepository.findAll().stream()
-            .map(MailEntity::getArchivedMailDto)
+            .map(DtoFactory::createFrom)
             .collect(Collectors.toList());
     }
 
     public ArchivedMailDto getMailById(Integer id) {
-        return mailRepository.findOne(id).getArchivedMailDto();
+        return DtoFactory.createFrom(mailRepository.findOne(id));
     }
 }

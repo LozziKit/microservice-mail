@@ -5,6 +5,8 @@ import freemarker.template.Template;
 import io.lozzikit.mail.api.model.TemplateDto;
 import io.lozzikit.mail.entity.TemplateEntity;
 import io.lozzikit.mail.repository.TemplateRepository;
+import io.lozzikit.mail.util.DtoFactory;
+import io.lozzikit.mail.util.EntityFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,25 +24,25 @@ public class TemplateService {
     private Configuration configuration;
 
     public TemplateDto addTemplate(TemplateDto templateDto) throws IOException {
-        TemplateEntity entity = new TemplateEntity(templateDto);
+        TemplateEntity entity = EntityFactory.createFrom(templateDto);
         validateTemplate(templateDto);
 
         templateRepository.save(entity);
-        return entity.getTemplateDto();
+        return DtoFactory.createFrom(entity);
     }
 
     public List<TemplateDto> getAllTemplates() {
         return templateRepository.findAll().stream()
-            .map(TemplateEntity::getTemplateDto)
+            .map(DtoFactory::createFrom)
             .collect(Collectors.toList());
     }
 
     public TemplateDto getTemplateById(Integer id) {
-        return templateRepository.findOne(id).getTemplateDto();
+        return DtoFactory.createFrom(templateRepository.findOne(id));
     }
 
     public TemplateDto getTemplateByName(String name) {
-        return templateRepository.findOneByName(name).getTemplateDto();
+        return DtoFactory.createFrom(templateRepository.findOneByName(name));
     }
 
     public void updateTemplate(String name, TemplateDto templateDto) throws IOException {

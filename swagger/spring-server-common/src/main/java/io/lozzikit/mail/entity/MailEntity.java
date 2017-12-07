@@ -1,6 +1,5 @@
 package io.lozzikit.mail.entity;
 
-import io.lozzikit.mail.api.model.ArchivedMailDto;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
@@ -10,7 +9,6 @@ import java.util.Map;
 @Entity
 @Table(name = "mails")
 public class MailEntity {
-
     @Value("${server.contextPath}")
     private String contextPath;
 
@@ -105,20 +103,5 @@ public class MailEntity {
 
     public void setEffectiveContent(String effectiveContent) {
         this.effectiveContent = effectiveContent;
-    }
-
-    @Transient
-    public ArchivedMailDto getArchivedMailDto() {
-        ArchivedMailDto archivedMailDto = new ArchivedMailDto();
-        archivedMailDto.setUrl(contextPath + "/mails/" + id);
-        archivedMailDto.setTemplateName(templateName);
-        archivedMailDto.setFrom(from);
-        archivedMailDto.setTo(to);
-        archivedMailDto.setCc(cc);
-        archivedMailDto.setCci(cci);
-        archivedMailDto.setMap(map);
-        archivedMailDto.setEffectiveContent(effectiveContent);
-
-        return archivedMailDto;
     }
 }

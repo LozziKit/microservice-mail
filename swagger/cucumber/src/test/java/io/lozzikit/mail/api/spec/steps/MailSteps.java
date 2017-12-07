@@ -10,13 +10,13 @@ import io.lozzikit.mail.api.MailApi;
 import io.lozzikit.mail.api.dto.ArchivedMailDto;
 import io.lozzikit.mail.api.dto.JobDto;
 import io.lozzikit.mail.api.dto.MailDto;
-import io.lozzikit.mail.api.dto.PayloadDto;
 import io.lozzikit.mail.api.spec.helpers.Environment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 
 public class MailSteps {
     private Environment env;
