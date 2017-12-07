@@ -9,7 +9,7 @@
 
     <modules>
         <module>swagger/cucumber</module>
-        <!-- <module>swagger/database</module> -->
+        <module>swagger/database</module>
         <module>swagger/spring-server</module>
     </modules>
 </project>
