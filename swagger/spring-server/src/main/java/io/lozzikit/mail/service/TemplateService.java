@@ -42,7 +42,8 @@ public class TemplateService {
     }
 
     public TemplateDto getTemplateByName(String name) {
-        return DtoFactory.createFrom(templateRepository.findOneByName(name));
+        TemplateEntity entity = templateRepository.findOneByName(name);
+        return DtoFactory.createFrom(entity);
     }
 
     public void updateTemplate(String name, TemplateDto templateDto) throws IOException {

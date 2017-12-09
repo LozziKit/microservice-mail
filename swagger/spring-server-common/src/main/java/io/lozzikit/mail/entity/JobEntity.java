@@ -8,8 +8,9 @@ import javax.persistence.*;
 @Table(name = "jobs")
 public class JobEntity {
     private Integer id;
-    private String url;
     private StatusEnum status;
+
+    private MailEntity mail;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,13 +22,13 @@ public class JobEntity {
         this.id = id;
     }
 
-    @Column(name = "url")
-    public String getUrl() {
-        return url;
+    @OneToOne
+    public MailEntity getMail() {
+        return mail;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setMail(MailEntity mail) {
+        this.mail = mail;
     }
 
     @Column(name = "status")

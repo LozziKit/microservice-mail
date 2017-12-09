@@ -42,7 +42,7 @@ public class TemplatesApiController implements TemplatesApi {
     public ResponseEntity<TemplateDto> templatesNameGet(@PathVariable String name) {
         try {
             return new ResponseEntity<>(templateService.getTemplateByName(name), HttpStatus.OK);
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }

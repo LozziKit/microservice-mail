@@ -42,7 +42,7 @@ public class MailsApiController implements MailsApi {
     public ResponseEntity<ArchivedMailDto> mailsIdGet(@PathVariable Integer id) {
         try {
             return new ResponseEntity<>(mailService.getMailById(id), HttpStatus.OK);
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException | NullPointerException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }

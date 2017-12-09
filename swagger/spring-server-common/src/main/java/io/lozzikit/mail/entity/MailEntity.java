@@ -54,7 +54,7 @@ public class MailEntity {
 
     @ElementCollection
     @CollectionTable(name = "mail_to")
-    @Column(name = "to")
+    @Column(name = "dest")
     public List<String> getTo() {
         return to;
     }
