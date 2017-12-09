@@ -17,6 +17,7 @@ services:
         image: lozzikit-microservice-mail/server
         ports:
             - 8080:8080
+            - 5005:5005
         depends_on:
             database:
                 condition: service_healthy
@@ -24,11 +25,30 @@ services:
             test: ["CMD", "curl", "-sSfk", "http://localhost:8080/api/mail/v1/health"]
             interval: 10s
             timeout: 10s
+            retries: 5
         links:
-          - database:io.lozzikit.microservice.mail.database
+          - database:database.mail.microservice.lozzikit.io
+
+    server-test:
+        image: lozzikit-microservice-mail/server-test
+        ports:
+            - 8090:8090
+            - 5006:5005
+        depends_on:
+            server:
+                condition: service_healthy
+        healthcheck:
+            test: ["CMD", "curl", "-sSfk", "http://localhost:8090/health"]
+            interval: 10s
+            timeout: 10s
+        links:
+          - database:database.mail.microservice.lozzikit.io
 
     cucumber:
         image: lozzikit-microservice-mail/cucumber
         depends_on:
-            server:
+            server-test:
                 condition: service_healthy
+        links:
+          - server:server.mail.microservice.lozzikit.io
+          - server-test:server-test.mail.microservice.lozzikit.io
