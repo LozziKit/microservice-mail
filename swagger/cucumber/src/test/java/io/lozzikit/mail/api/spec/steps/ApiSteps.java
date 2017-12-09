@@ -13,10 +13,6 @@ public class ApiSteps {
         this.env = environment;
     }
 
-    @Given("^An empty database$")
-    public void an_empty_database() throws Throwable {
-    }
-
     @Then("^I receive a (\\d+) status code$")
     public void i_receive_a_status_code(int status) throws Throwable {
         assertEquals(status, env.getApiStatusCode());

@@ -1,9 +1,13 @@
 package io.lozzikit.mail.api.spec.steps;
 
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
+import io.lozzikit.mail.ApiClient;
 import io.lozzikit.mail.ApiException;
 import io.lozzikit.mail.api.JobApi;
 import io.lozzikit.mail.api.MailApi;
@@ -12,9 +16,12 @@ import io.lozzikit.mail.api.dto.JobDto;
 import io.lozzikit.mail.api.dto.MailDto;
 import io.lozzikit.mail.api.spec.helpers.Environment;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
@@ -34,6 +41,15 @@ public class MailSteps {
         this.env = environment;
         this.mailApi = env.getMailApi();
         this.jobApi = env.getJobApi();
+    }
+
+    @Given("^An empty job and mail database")
+    public void an_empty_job_and_mail_database() throws Throwable {
+        Request request = new Request.Builder()
+                .url(env.getTestUrl("/tests/mails+jobs"))
+                .delete()
+                .build();
+        assertEquals(200, env.executeTestRequest(request).code());
     }
 
     @Given("^A mail endpoint$")
@@ -57,25 +73,13 @@ public class MailSteps {
 
     @Given("^A filled job and mail database$")
     public void aFilledJobAndMailDatabase() throws Throwable {
-        final String from = "z.z@z.org";
+        an_empty_job_and_mail_database();
 
-        List<MailDto> mailDtoList = new ArrayList<>();
-
-        MailDto mailDto = new MailDto();
-        mailDto.setTemplateName("test-template-2");
-        mailDto.setFrom(from);
-        mailDto.addToItem("y.y@y.org");
-        mailDto.putMapItem("firstname", "y");
-        mailDtoList.add(mailDto);
-
-        mailDto = new MailDto();
-        mailDto.setTemplateName("test-template-2");
-        mailDto.setFrom(from);
-        mailDto.addToItem("x.x@x.org");
-        mailDto.putMapItem("firstname", "x");
-        mailDtoList.add(mailDto);
-
-        mailApi.mailsPost(mailDtoList);
+        Request request = new Request.Builder()
+                .url(env.getTestUrl("/tests/mails+jobs"))
+                .post(RequestBody.create(env.JSON, "default"))
+                .build();
+        assertEquals(200, env.executeTestRequest(request).code());
     }
 
     @SuppressWarnings("unchecked")
@@ -125,7 +129,13 @@ public class MailSteps {
 
     @Given("^A mail id$")
     public void aMailId() throws Throwable {
-        this.mailId = 1;
+        Request request = new Request.Builder()
+                .url(env.getTestUrl("/tests/mails/one"))
+                .get()
+                .build();
+        Response res = env.executeTestRequest(request);
+        assertEquals(200, res.code());
+        this.mailId = Integer.parseInt(res.body().string());
     }
 
     @When("^I GET on the /mails/id endpoint$")
@@ -193,13 +203,11 @@ public class MailSteps {
 
     @Given("^A processed job id$")
     public void aProcessedJobId() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        this.jobId = 1;
     }
 
     @Given("^An in-progress job id$")
     public void anInProgressJobId() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        this.jobId = 4;
     }
 }

@@ -4,7 +4,7 @@ Feature: Creation of templates
     Given A template endpoint
 
   Scenario: Fetch all templates when database has none
-    Given An empty database
+    Given An empty template database
     When I GET on the /templates endpoint
     Then I receive a 204 status code
 

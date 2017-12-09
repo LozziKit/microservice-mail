@@ -1,5 +1,8 @@
 package io.lozzikit.mail.api.spec.steps;
 
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -8,8 +11,10 @@ import io.lozzikit.mail.api.TemplateApi;
 import io.lozzikit.mail.api.dto.TemplateDto;
 import io.lozzikit.mail.api.spec.helpers.Environment;
 
+import java.sql.PreparedStatement;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
@@ -24,6 +29,15 @@ public class TemplateSteps {
     public TemplateSteps(Environment environment) {
         this.env = environment;
         this.api = environment.getTemplateApi();
+    }
+
+    @Given("^An empty template database$")
+    public void an_empty_template_database() throws Throwable {
+        Request request = new Request.Builder()
+                .url(env.getTestUrl("/tests/templates"))
+                .delete()
+                .build();
+        assertEquals(200, env.executeTestRequest(request).code());
     }
 
     @Given("^A template endpoint$")
@@ -42,13 +56,13 @@ public class TemplateSteps {
 
     @Given("^A filled template database$")
     public void aFilledDatabase() throws Throwable {
-        TemplateDto templateDto = new TemplateDto();
-        templateDto.setName("test-template-" + ++templateNum);
-        templateDto.setDescription("A templateDto for testing using cucumber");
-        templateDto.setContent("Hello ${name}!");
-        api.templatesPost(templateDto);
-        templateDto.setName("test-template-" + ++templateNum);
-        api.templatesPost(templateDto);
+        an_empty_template_database();
+
+        Request request = new Request.Builder()
+                .url(env.getTestUrl("/tests/templates"))
+                .post(RequestBody.create(env.JSON, "default"))
+                .build();
+        assertEquals(200, env.executeTestRequest(request).code());
     }
 
     @SuppressWarnings("unchecked")
@@ -76,6 +90,10 @@ public class TemplateSteps {
     public void iReceiveATemplatePayload() throws Throwable {
         TemplateDto templateDto = (TemplateDto) env.getApiResponse().getData();
         assertNotNull(templateDto);
+        assertNotNull(templateDto.getUrl());
+        assertNotNull(templateDto.getName());
+        assertNotNull(templateDto.getDescription());
+        assertNotNull(templateDto.getContent());
     }
 
     @Given("^A template payload$")
