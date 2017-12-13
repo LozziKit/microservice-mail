@@ -1,9 +1,7 @@
 package io.lozzikit.mail.util;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import io.lozzikit.mail.api.model.ArchivedMailDto;
 import io.lozzikit.mail.api.model.JobDto;
-import io.lozzikit.mail.api.model.MailDto;
 import io.lozzikit.mail.api.model.TemplateDto;
 import io.lozzikit.mail.entity.JobEntity;
 import io.lozzikit.mail.entity.MailEntity;
@@ -13,10 +11,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 
 public class DtoFactory {
-    private static ModelMapper modelMapper = configureModelMapper();
-
     @Value("${server.contextPath}")
     private static String contextPath;
+    private static ModelMapper modelMapper = configureModelMapper();
 
     private static Converter<Integer, String> getUrlConverter(String resource) {
         return ctx -> contextPath + resource + ctx.getSource();
@@ -26,23 +23,23 @@ public class DtoFactory {
         ModelMapper modelMapper = new ModelMapper();
 
         modelMapper.typeMap(TemplateEntity.class, TemplateDto.class)
-                .addMappings(mapper -> mapper
-                        .using(getUrlConverter("/templates"))
-                        .map(TemplateEntity::getId, TemplateDto::setUrl));
+            .addMappings(mapper -> mapper
+                .using(getUrlConverter("/templates"))
+                .map(TemplateEntity::getId, TemplateDto::setUrl));
 
         modelMapper.typeMap(JobEntity.class, JobDto.class)
-                .addMappings(mapper -> {
-                    mapper.using(getUrlConverter("/jobs"))
-                        .map(JobEntity::getId, JobDto::setUrl);
+            .addMappings(mapper -> {
+                mapper.using(getUrlConverter("/jobs"))
+                    .map(JobEntity::getId, JobDto::setUrl);
 
-                    mapper.using(getUrlConverter("/mails"))
-                            .map(j -> j.getMail().getId(), JobDto::setMail);
-                });
+                mapper.using(getUrlConverter("/mails"))
+                    .map(j -> j.getMail().getId(), JobDto::setMail);
+            });
 
         modelMapper.typeMap(MailEntity.class, ArchivedMailDto.class)
-                .addMappings(mapper -> mapper
-                        .using(getUrlConverter("/mails"))
-                        .map(MailEntity::getId, ArchivedMailDto::setUrl));
+            .addMappings(mapper -> mapper
+                .using(getUrlConverter("/mails"))
+                .map(MailEntity::getId, ArchivedMailDto::setUrl));
 
         return modelMapper;
     }
@@ -56,7 +53,6 @@ public class DtoFactory {
     }
 
     public static TemplateDto createFrom(TemplateEntity entity) {
-        TemplateDto dto = modelMapper.map(entity, TemplateDto.class);
-        return dto;
+        return modelMapper.map(entity, TemplateDto.class);
     }
 }

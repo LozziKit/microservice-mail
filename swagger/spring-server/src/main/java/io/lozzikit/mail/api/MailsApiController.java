@@ -19,9 +19,9 @@ public class MailsApiController implements MailsApi {
     private MailService mailService;
 
     @Override
-    public ResponseEntity<List<JobDto>> mailsPost(@RequestBody List<MailDto> mailDto) {
+    public ResponseEntity<List<JobDto>> mailsPost(@RequestBody List<MailDto> mailDtos) {
         try {
-            return new ResponseEntity<>(mailService.sendMail(mailDto), HttpStatus.CREATED);
+            return new ResponseEntity<>(mailService.sendMails(mailDtos), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

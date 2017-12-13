@@ -1,6 +1,5 @@
 package io.lozzikit.mail.api.spec.steps;
 
-import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import cucumber.api.java.en.Given;
@@ -11,12 +10,9 @@ import io.lozzikit.mail.api.TemplateApi;
 import io.lozzikit.mail.api.dto.TemplateDto;
 import io.lozzikit.mail.api.spec.helpers.Environment;
 
-import java.sql.PreparedStatement;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 public class TemplateSteps {
     private static int templateNum = 0;
@@ -32,11 +28,11 @@ public class TemplateSteps {
     }
 
     @Given("^An empty template database$")
-    public void an_empty_template_database() throws Throwable {
+    public void anEmptyTemplateDatabase() throws Throwable {
         Request request = new Request.Builder()
-                .url(env.getTestUrl("/tests/templates"))
-                .delete()
-                .build();
+            .url(env.getTestUrl("/tests/templates"))
+            .delete()
+            .build();
         assertEquals(200, env.executeTestRequest(request).code());
     }
 
@@ -56,12 +52,12 @@ public class TemplateSteps {
 
     @Given("^A filled template database$")
     public void aFilledDatabase() throws Throwable {
-        an_empty_template_database();
+        anEmptyTemplateDatabase();
 
         Request request = new Request.Builder()
-                .url(env.getTestUrl("/tests/templates"))
-                .post(RequestBody.create(env.JSON, "default"))
-                .build();
+            .url(env.getTestUrl("/tests/templates"))
+            .post(RequestBody.create(env.JSON, "default"))
+            .build();
         assertEquals(200, env.executeTestRequest(request).code());
     }
 

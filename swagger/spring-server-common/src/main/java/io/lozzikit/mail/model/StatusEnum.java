@@ -5,6 +5,8 @@ public enum StatusEnum {
 
     FAILED("FAILED"),
 
+    CANCELLED("CANCELLED"),
+
     ONGOING("ONGOING"),
 
     INVALID("INVALID");

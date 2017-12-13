@@ -4,7 +4,6 @@ import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
-import io.lozzikit.mail.ApiClient;
 import io.lozzikit.mail.ApiException;
 import io.lozzikit.mail.ApiResponse;
 import io.lozzikit.mail.api.JobApi;
@@ -12,12 +11,7 @@ import io.lozzikit.mail.api.MailApi;
 import io.lozzikit.mail.api.TemplateApi;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Properties;
-import java.util.TreeMap;
 
 /**
  * Created by Olivier Liechti on 24/06/17.

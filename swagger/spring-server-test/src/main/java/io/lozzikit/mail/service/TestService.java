@@ -66,7 +66,7 @@ public class TestService {
                 mail1.setTemplateName("test-template-1");
                 mail1.setFrom(from);
 
-                dests = new ArrayList<>(Arrays.asList("y.y@y.org"));
+                dests = new ArrayList<>(Collections.singletonList("y.y@y.org"));
                 mail1.setTo(dests);
 
                 map = new TreeMap<>();
@@ -78,7 +78,7 @@ public class TestService {
                 mail2.setTemplateName("test-template-2");
                 mail2.setFrom(from);
 
-                dests = new ArrayList<>(Arrays.asList("x.x@x.org"));
+                dests = new ArrayList<>(Collections.singletonList("x.x@x.org"));
                 mail2.setTo(dests);
 
                 map = new TreeMap<>();
@@ -90,7 +90,7 @@ public class TestService {
                 mail3.setTemplateName("test-template-2");
                 mail3.setFrom(from);
 
-                dests = new ArrayList<>(Arrays.asList("v.v@v.org"));
+                dests = new ArrayList<>(Collections.singletonList("v.v@v.org"));
                 mail3.setTo(dests);
 
                 map = new TreeMap<>();
@@ -102,7 +102,7 @@ public class TestService {
                 mail4.setTemplateName("test-template-2");
                 mail4.setFrom(from);
 
-                dests = new ArrayList<>(Arrays.asList("w.w@w.org"));
+                dests = new ArrayList<>(Collections.singletonList("w.w@w.org"));
                 mail4.setTo(dests);
 
                 map = new TreeMap<>();

@@ -1,6 +1,5 @@
 package io.lozzikit.mail.api.spec.steps;
 
-import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import io.lozzikit.mail.api.spec.helpers.Environment;
 
@@ -14,7 +13,7 @@ public class ApiSteps {
     }
 
     @Then("^I receive a (\\d+) status code$")
-    public void i_receive_a_status_code(int status) throws Throwable {
+    public void iReceiveAStatusCode(int status) throws Throwable {
         assertEquals(status, env.getApiStatusCode());
     }
 }
