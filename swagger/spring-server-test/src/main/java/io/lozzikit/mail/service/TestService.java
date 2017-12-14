@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class TestService {
@@ -140,5 +141,16 @@ public class TestService {
     public Integer getOneMailId() {
         List<MailEntity> mails = mailRepository.findAll();
         return mails.get(0).getId();
+    }
+
+    public Integer getOneJobId(String status) {
+        List<JobEntity> jobs = jobRepository.findAll();
+        if(status != null) {
+            jobs = jobs
+                    .stream()
+                    .filter(j -> j.getStatus().toString().equals(status.toUpperCase()))
+                    .collect(Collectors.toList());
+        }
+        return jobs.get(0).getId();
     }
 }
