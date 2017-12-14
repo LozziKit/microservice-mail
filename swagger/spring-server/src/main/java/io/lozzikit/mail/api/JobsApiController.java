@@ -37,7 +37,14 @@ public class JobsApiController implements JobsApi {
 
     @Override
     public ResponseEntity<Void> jobsIdDelete(@PathVariable Integer id) {
-        return null;
+        try {
+            jobService.deleteJobById(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (NullPointerException ex) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (UnsupportedOperationException ex) {
+            return new ResponseEntity<>(HttpStatus.GONE);
+        }
     }
 
 }

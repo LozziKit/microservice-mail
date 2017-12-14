@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class TestApiController {
@@ -54,5 +55,12 @@ public class TestApiController {
     public ResponseEntity<Integer> dbMailArchivedId() {
         Integer archivedMailId = testService.getOneMailId();
         return new ResponseEntity<>(archivedMailId, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/tests/jobs/one",
+            method = RequestMethod.GET)
+    public ResponseEntity<Integer> dbJobId(@RequestParam(name = "status", required = false) String status) {
+        Integer jobId = testService.getOneJobId(status);
+        return new ResponseEntity<>(jobId, HttpStatus.OK);
     }
 }

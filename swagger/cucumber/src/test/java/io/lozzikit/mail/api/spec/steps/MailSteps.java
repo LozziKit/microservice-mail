@@ -163,7 +163,13 @@ public class MailSteps {
 
     @Given("^A job id$")
     public void aJobId() throws Throwable {
-        this.jobId = 1;
+        Request request = new Request.Builder()
+                .url(env.getTestUrl("/tests/jobs/one"))
+                .get()
+                .build();
+        Response res = env.executeTestRequest(request);
+        assertEquals(200, res.code());
+        this.jobId = Integer.parseInt(res.body().string());
     }
 
     @When("^I GET on the /jobs/id endpoint$")
@@ -197,11 +203,23 @@ public class MailSteps {
 
     @Given("^A processed job id$")
     public void aProcessedJobId() throws Throwable {
-        this.jobId = 1;
+        Request request = new Request.Builder()
+                .url(env.getTestUrl("/tests/jobs/one?status=DONE"))
+                .get()
+                .build();
+        Response res = env.executeTestRequest(request);
+        assertEquals(200, res.code());
+        this.jobId = Integer.parseInt(res.body().string());
     }
 
     @Given("^An in-progress job id$")
     public void anInProgressJobId() throws Throwable {
-        this.jobId = 4;
+        Request request = new Request.Builder()
+                .url(env.getTestUrl("/tests/jobs/one?status=ONGOING"))
+                .get()
+                .build();
+        Response res = env.executeTestRequest(request);
+        assertEquals(200, res.code());
+        this.jobId = Integer.parseInt(res.body().string());
     }
 }
