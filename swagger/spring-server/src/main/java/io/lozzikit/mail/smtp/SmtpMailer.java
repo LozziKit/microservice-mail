@@ -2,11 +2,9 @@ package io.lozzikit.mail.smtp;
 
 import io.lozzikit.mail.api.model.MailDto;
 import org.simplejavamail.MailException;
-import org.simplejavamail.email.Email;
 import org.simplejavamail.email.EmailBuilder;
 import org.simplejavamail.mailer.Mailer;
 import org.simplejavamail.mailer.config.ServerConfig;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 

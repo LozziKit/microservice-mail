@@ -8,7 +8,6 @@ import io.lozzikit.mail.util.DtoFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.print.attribute.standard.JobState;
 import java.util.List;
 import java.util.stream.Collectors;
 
