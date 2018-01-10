@@ -9,6 +9,7 @@ import io.lozzikit.mail.ApiResponse;
 import io.lozzikit.mail.api.JobApi;
 import io.lozzikit.mail.api.MailApi;
 import io.lozzikit.mail.api.TemplateApi;
+import io.lozzikit.mail.api.spec.smtp.MockSmtpServer;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -30,6 +31,9 @@ public class Environment {
     private ApiResponse apiResponse;
     private ApiException apiException;
     private boolean apiCallThrewException;
+
+    // Smtp server
+    private static MockSmtpServer mockSmtpServer = new MockSmtpServer();
 
     public Environment() throws IOException {
         Properties properties = new Properties();
@@ -89,5 +93,9 @@ public class Environment {
 
     public int getApiStatusCode() {
         return (apiCallThrewException) ? apiException.getCode() : apiResponse.getStatusCode();
+    }
+
+    public static MockSmtpServer getMockSmtpServer() {
+        return mockSmtpServer;
     }
 }

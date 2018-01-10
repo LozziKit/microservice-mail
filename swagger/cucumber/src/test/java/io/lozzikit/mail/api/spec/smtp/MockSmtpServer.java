@@ -9,4 +9,8 @@ public class MockSmtpServer {
         wiser = new Wiser();
         wiser.start();
     }
+
+    public Wiser getWiser() {
+        return wiser;
+    }
 }

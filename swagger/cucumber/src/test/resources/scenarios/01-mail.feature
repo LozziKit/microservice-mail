@@ -4,6 +4,7 @@ Feature: Manipulation of mails
     Given A mail endpoint
     And A job endpoint
     And A filled template database
+    And A SMTP server
 
   Scenario: Fetch all archived mails when database has none
     Given An empty job and mail database
@@ -21,6 +22,8 @@ Feature: Manipulation of mails
     When I POST the payload to the /mails endpoint
     Then I receive a 201 status code
     And I receive a list of jobs payload
+    And I wait 30 seconds
+    And The SMTP server has received the corresponding mail
 
   Scenario: Fetch an archived mail
     Given A filled job and mail database

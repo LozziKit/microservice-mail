@@ -13,9 +13,12 @@ import io.lozzikit.mail.api.dto.ArchivedMailDto;
 import io.lozzikit.mail.api.dto.JobDto;
 import io.lozzikit.mail.api.dto.MailDto;
 import io.lozzikit.mail.api.spec.helpers.Environment;
+import org.subethamail.wiser.Wiser;
+import org.subethamail.wiser.WiserMessage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.junit.Assert.*;
 
@@ -221,5 +224,53 @@ public class MailSteps {
         Response res = env.executeTestRequest(request);
         assertEquals(200, res.code());
         this.jobId = Integer.parseInt(res.body().string());
+    }
+
+    @And("^A SMTP server$")
+    public void aSMTPServer() throws Throwable {
+        Wiser wiser = Environment.getMockSmtpServer().getWiser();
+        assertNotNull(wiser);
+    }
+
+    @And("^I wait (\\d+) seconds$")
+    public void iWaitSeconds(int seconds) throws Throwable {
+        Thread.sleep(seconds * 1000);
+    }
+
+    @And("^The SMTP server has received the corresponding mail$")
+    public void theSMTPServerHasReceivedTheCorrespondingMail() throws Throwable {
+        Wiser wiser = Environment.getMockSmtpServer().getWiser();
+
+        // Check that the senders are the same
+        assertArrayEquals(
+                mailDtoList
+                        .stream()
+                        .map(MailDto::getFrom)
+                        .sorted()
+                        .toArray(),
+                wiser.getMessages()
+                        .stream()
+                        .map(WiserMessage::getEnvelopeSender)
+                        .sorted()
+                        .toArray()
+        );
+
+        // Check that the receivers are the same.
+        assertArrayEquals(
+                mailDtoList
+                        .stream()
+                        .flatMap(m -> Stream.of(
+                                m.getTo().stream(),
+                                m.getCc().stream(),
+                                m.getCci().stream()
+                            ).flatMap(i -> i))
+                        .sorted()
+                        .toArray(),
+                wiser.getMessages()
+                        .stream()
+                        .map(WiserMessage::getEnvelopeReceiver)
+                        .sorted()
+                        .toArray()
+        );
     }
 }
