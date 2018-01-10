@@ -7,6 +7,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
 import io.lozzikit.mail.ApiException;
+import io.lozzikit.mail.ApiResponse;
 import io.lozzikit.mail.api.JobApi;
 import io.lozzikit.mail.api.MailApi;
 import io.lozzikit.mail.api.dto.ArchivedMailDto;
@@ -18,6 +19,7 @@ import org.subethamail.wiser.WiserMessage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 import static org.junit.Assert.*;
@@ -30,6 +32,7 @@ public class MailSteps {
     private List<MailDto> mailDtoList;
     private ArchivedMailDto archivedMailDto;
     private int mailId;
+    private String uniqueMailfrom;
 
     private JobDto jobDto;
     private int jobId;
@@ -46,7 +49,7 @@ public class MailSteps {
             .url(env.getTestUrl("/tests/mails+jobs"))
             .delete()
             .build();
-        assertEquals(200, env.executeTestRequest(request).code());
+        assertEquals(200, env.executeRequest(request).code());
     }
 
     @Given("^A mail endpoint$")
@@ -76,7 +79,7 @@ public class MailSteps {
             .url(env.getTestUrl("/tests/mails+jobs"))
             .post(RequestBody.create(env.JSON, "default"))
             .build();
-        assertEquals(200, env.executeTestRequest(request).code());
+        assertEquals(200, env.executeRequest(request).code());
     }
 
     @SuppressWarnings("unchecked")
@@ -84,6 +87,20 @@ public class MailSteps {
     public void iReceiveMultipleMailPayloads() throws Throwable {
         List<ArchivedMailDto> archivedMails = (List<ArchivedMailDto>) env.getApiResponse().getData();
         assertFalse(archivedMails.isEmpty());
+    }
+
+    @Given("^A unique mail payload$")
+    public void aSingleMailPayload() throws Throwable {
+        uniqueMailfrom = "unique." + UUID.randomUUID().toString()  + "@a.org";
+
+        this.mailDtoList = new ArrayList<>();
+
+        MailDto mailDto = new MailDto();
+        mailDto.setTemplateName("test-template-1");
+        mailDto.setFrom(uniqueMailfrom);
+        mailDto.addToItem("b.b@b.org");
+        mailDto.putMapItem("firstname", "b");
+        this.mailDtoList.add(mailDto);
     }
 
     @Given("^A mail payload$")
@@ -130,7 +147,7 @@ public class MailSteps {
             .url(env.getTestUrl("/tests/mails/one"))
             .get()
             .build();
-        Response res = env.executeTestRequest(request);
+        Response res = env.executeRequest(request);
         assertEquals(200, res.code());
         this.mailId = Integer.parseInt(res.body().string());
     }
@@ -170,7 +187,7 @@ public class MailSteps {
                 .url(env.getTestUrl("/tests/jobs/one"))
                 .get()
                 .build();
-        Response res = env.executeTestRequest(request);
+        Response res = env.executeRequest(request);
         assertEquals(200, res.code());
         this.jobId = Integer.parseInt(res.body().string());
     }
@@ -210,7 +227,7 @@ public class MailSteps {
                 .url(env.getTestUrl("/tests/jobs/one?status=DONE"))
                 .get()
                 .build();
-        Response res = env.executeTestRequest(request);
+        Response res = env.executeRequest(request);
         assertEquals(200, res.code());
         this.jobId = Integer.parseInt(res.body().string());
     }
@@ -221,7 +238,7 @@ public class MailSteps {
                 .url(env.getTestUrl("/tests/jobs/one?status=ONGOING"))
                 .get()
                 .build();
-        Response res = env.executeTestRequest(request);
+        Response res = env.executeRequest(request);
         assertEquals(200, res.code());
         this.jobId = Integer.parseInt(res.body().string());
     }
@@ -272,5 +289,28 @@ public class MailSteps {
                         .sorted()
                         .toArray()
         );
+    }
+
+    @And("^I DELETE the job on the /jobs/id endpoint$")
+    public void iDELETETheJobOnTheJobsIdEndpoint() throws Throwable {
+        List<JobDto> jobs = (List<JobDto>) env.getApiResponse().getData();
+
+        Request request = new Request.Builder()
+                .url(env.getServerUrl(jobs.get(0).getUrl()))
+                .delete()
+                .build();
+
+        Response res = env.executeRequest(request);
+        env.setApiResponse(new ApiResponse(res.code(), res.headers().toMultimap()));
+    }
+
+    @And("^The SMTP server has not received the unique mail$")
+    public void theSMTPServerHasNotReceivedTheCorrespondingMail() throws Throwable {
+        Wiser wiser = Environment.getMockSmtpServer().getWiser();
+
+        assertTrue(wiser.getMessages()
+                .stream()
+                .noneMatch(m -> m.getEnvelopeSender().equals(uniqueMailfrom)));
+
     }
 }

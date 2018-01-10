@@ -33,7 +33,7 @@ public class TemplateSteps {
             .url(env.getTestUrl("/tests/templates"))
             .delete()
             .build();
-        assertEquals(200, env.executeTestRequest(request).code());
+        assertEquals(200, env.executeRequest(request).code());
     }
 
     @Given("^A template endpoint$")
@@ -58,7 +58,7 @@ public class TemplateSteps {
             .url(env.getTestUrl("/tests/templates"))
             .post(RequestBody.create(env.JSON, "default"))
             .build();
-        assertEquals(200, env.executeTestRequest(request).code());
+        assertEquals(200, env.executeRequest(request).code());
     }
 
     @SuppressWarnings("unchecked")

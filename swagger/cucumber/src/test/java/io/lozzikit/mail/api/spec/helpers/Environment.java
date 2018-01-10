@@ -22,7 +22,8 @@ public class Environment {
     private TemplateApi templateApi = new TemplateApi();
     private MailApi mailApi = new MailApi();
     private JobApi jobApi = new JobApi();
-    private OkHttpClient testClient = new OkHttpClient();
+    private OkHttpClient client = new OkHttpClient();
+    private String baseServerUrl;
     private String baseTestUrl;
 
     public final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -39,10 +40,10 @@ public class Environment {
         Properties properties = new Properties();
         properties.load(this.getClass().getClassLoader().getResourceAsStream("environment.properties"));
 
-        String url = properties.getProperty("io.lozzikit.mail.server.url");
-        templateApi.getApiClient().setBasePath(url);
-        mailApi.getApiClient().setBasePath(url);
-        jobApi.getApiClient().setBasePath(url);
+        baseServerUrl = properties.getProperty("io.lozzikit.mail.server.url");
+        templateApi.getApiClient().setBasePath(baseServerUrl);
+        mailApi.getApiClient().setBasePath(baseServerUrl);
+        jobApi.getApiClient().setBasePath(baseServerUrl);
 
         baseTestUrl = properties.getProperty("io.lozzikit.mail.server-test.url");
     }
@@ -59,8 +60,12 @@ public class Environment {
         return jobApi;
     }
 
-    public Response executeTestRequest(Request request) throws IOException {
-        return testClient.newCall(request).execute();
+    public Response executeRequest(Request request) throws IOException {
+        return client.newCall(request).execute();
+    }
+
+    public String getServerUrl(String path) {
+        return baseServerUrl + path;
     }
 
     public String getTestUrl(String path) {
