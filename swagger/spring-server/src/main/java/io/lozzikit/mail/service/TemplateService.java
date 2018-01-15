@@ -56,8 +56,8 @@ public class TemplateService {
         templateRepository.save(entity);
     }
 
-    public void deleteTemplate(String name) {
-        templateRepository.deleteOneByName(name);
+    public long deleteTemplate(String name) {
+        return templateRepository.deleteOneByName(name);
     }
 
     private void validateTemplate(TemplateDto templateDto) throws IOException {

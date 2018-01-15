@@ -207,10 +207,6 @@ definitions:
                 type: string
                 description: Can be any of ["DONE", "FAILED", "ONGOING", "INVALID"]
 
-    PayloadDto:
-        type: object
-        properties:
-
     MailDto:
         type: object
         properties:

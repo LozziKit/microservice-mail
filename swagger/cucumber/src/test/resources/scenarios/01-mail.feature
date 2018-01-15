@@ -28,6 +28,7 @@ Feature: Manipulation of mails
   Scenario: Send and cancel a mail
     Given A unique mail payload
     When I POST the payload to the /mails endpoint
+    And I wait 5 seconds
     And I DELETE the job on the /jobs/id endpoint
     Then I receive a 204 status code
     And I wait 30 seconds

@@ -7,7 +7,9 @@ import io.lozzikit.mail.entity.JobEntity;
 import io.lozzikit.mail.entity.MailEntity;
 import io.lozzikit.mail.entity.TemplateEntity;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
 
+@Component
 public class EntityFactory {
     private static ModelMapper modelMapper = configureModelMapper();
 

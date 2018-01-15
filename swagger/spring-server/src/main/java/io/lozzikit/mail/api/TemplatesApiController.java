@@ -50,8 +50,11 @@ public class TemplatesApiController implements TemplatesApi {
     @Override
     public ResponseEntity<Void> templatesNameDelete(@PathVariable String name) {
         try {
-            templateService.deleteTemplate(name);
-            return new ResponseEntity<>(HttpStatus.OK);
+            if(templateService.deleteTemplate(name) > 0) {
+                return new ResponseEntity<>(HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

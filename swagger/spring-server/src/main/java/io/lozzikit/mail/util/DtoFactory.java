@@ -9,14 +9,20 @@ import io.lozzikit.mail.entity.TemplateEntity;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+@Component
 public class DtoFactory {
-    @Value("${server.contextPath}")
     private static String contextPath;
     private static ModelMapper modelMapper = configureModelMapper();
 
+    @Value("${server.contextPath}")
+    public void setContextPath(String contextPath) {
+        DtoFactory.contextPath = contextPath;
+    }
+
     private static Converter<Integer, String> getUrlConverter(String resource) {
-        return ctx -> contextPath + resource + ctx.getSource();
+        return ctx -> contextPath + resource + "/" + ctx.getSource();
     }
 
     private static ModelMapper configureModelMapper() {
@@ -25,7 +31,7 @@ public class DtoFactory {
         modelMapper.typeMap(TemplateEntity.class, TemplateDto.class)
             .addMappings(mapper -> mapper
                 .using(getUrlConverter("/templates"))
-                .map(TemplateEntity::getId, TemplateDto::setUrl));
+                .map(TemplateEntity::getName, TemplateDto::setUrl));
 
         modelMapper.typeMap(JobEntity.class, JobDto.class)
             .addMappings(mapper -> {

@@ -86,8 +86,8 @@ public class TemplateSteps {
     public void iReceiveATemplatePayload() throws Throwable {
         TemplateDto templateDto = (TemplateDto) env.getApiResponse().getData();
         assertNotNull(templateDto);
-        assertNotNull(templateDto.getUrl());
         assertNotNull(templateDto.getName());
+        assertNotNull(templateDto.getUrl());
         assertNotNull(templateDto.getDescription());
         assertNotNull(templateDto.getContent());
     }
