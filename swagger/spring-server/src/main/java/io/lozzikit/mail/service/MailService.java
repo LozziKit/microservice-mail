@@ -1,18 +1,29 @@
 package io.lozzikit.mail.service;
 
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
 import io.lozzikit.mail.api.model.ArchivedMailDto;
 import io.lozzikit.mail.api.model.JobDto;
 import io.lozzikit.mail.api.model.MailDto;
 import io.lozzikit.mail.entity.JobEntity;
+import io.lozzikit.mail.entity.MailEntity;
+import io.lozzikit.mail.entity.TemplateEntity;
 import io.lozzikit.mail.model.StatusEnum;
 import io.lozzikit.mail.repository.JobRepository;
 import io.lozzikit.mail.repository.MailRepository;
+import io.lozzikit.mail.repository.TemplateRepository;
 import io.lozzikit.mail.smtp.SmtpMailer;
 import io.lozzikit.mail.util.DtoFactory;
+import io.lozzikit.mail.util.EntityFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
@@ -21,8 +32,11 @@ import java.util.stream.Collectors;
 
 @Service
 public class MailService {
-    private static final Integer MAX_MAIL_TO_SEND = 25;
-    private static final Integer TIME_TO_SLEEP = 20 * 1000;
+    @Value("${io.lozzikit.smtp.max_mail_to_send}")
+    private Integer MAX_MAIL_TO_SEND;
+
+    @Value("${io.lozzikit.smtp.milliseconds_between_sendings}")
+    private Integer TIME_TO_SLEEP;
 
     @Autowired
     private MailRepository mailRepository;
@@ -31,9 +45,15 @@ public class MailService {
     private JobRepository jobRepository;
 
     @Autowired
+    private TemplateRepository templateRepository;
+
+    @Autowired
+    private Configuration configuration;
+
+    @Autowired
     private SmtpMailer mailer;
 
-    private BlockingQueue<Pair<MailDto, Integer>> mailingQueue;
+    private BlockingQueue<Pair<MailEntity, Integer>> mailingQueue;
 
     public MailService() {
         mailingQueue = new LinkedBlockingQueue<>();
@@ -51,8 +71,31 @@ public class MailService {
                 jobEntity.setStatus(StatusEnum.ONGOING);
                 jobEntity = jobRepository.save(jobEntity);
 
+                MailEntity mailEntity = EntityFactory.createFrom(mailDto);
+
+                // Render template
+                TemplateEntity template = templateRepository.findOneByName(mailEntity.getTemplateName());
+                if(template != null) {
+                    try {
+                        Template temp = new Template("sample", new StringReader(template.getContent()), configuration);
+                        StringWriter writer = new StringWriter();
+                        temp.process(mailEntity.getMap(), writer);
+
+                        String[] lines = writer.toString().split("\n.\n");
+                        mailEntity.setSubject(lines[0]);
+                        mailEntity.setEffectiveContent(lines[1]);
+
+                        mailRepository.save(mailEntity);
+                        mailingQueue.put(Pair.of(mailEntity, jobEntity.getId()));
+                    } catch (IOException | TemplateException e) {
+                        // Template error or
+                        jobEntity.setStatus(StatusEnum.INVALID);
+                    }
+                } else {
+                    // Template not found.
+                    jobEntity.setStatus(StatusEnum.INVALID);
+                }
                 jobDtos.add(DtoFactory.createFrom(jobEntity));
-                mailingQueue.put(Pair.of(mailDto, jobEntity.getId()));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -74,18 +117,18 @@ public class MailService {
     public class MailingTask implements Runnable {
         @Override
         public void run() {
-            List<Pair<MailDto, Integer>> pairs = new ArrayList<>();
+            List<Pair<MailEntity, Integer>> pairs = new ArrayList<>();
 
             while (true) {
                 try {
                     pairs.add(mailingQueue.take());
                     mailingQueue.drainTo(pairs, MAX_MAIL_TO_SEND - 1);
 
-                    for (Pair<MailDto, Integer> pair : pairs) {
+                    for (Pair<MailEntity, Integer> pair : pairs) {
                         JobEntity jobEntity = jobRepository.findOne(pair.getSecond());
 
                         if(jobEntity.getStatus() != StatusEnum.CANCELLED) {
-                            Boolean success = mailer.sendMail(pair.getFirst(), "");
+                            Boolean success = mailer.sendMail(pair.getFirst());
 
                             if(success) {
                                 jobEntity.setStatus(StatusEnum.DONE);
