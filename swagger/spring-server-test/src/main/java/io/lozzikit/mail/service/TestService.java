@@ -46,7 +46,7 @@ public class TestService {
                 TemplateEntity template2 = new TemplateEntity();
                 template2.setName("test-template-2");
                 template2.setDescription("A second template for testing");
-                template1.setContent("Goodbye ${name}!");
+                template2.setContent("Goodbye ${name}!");
                 templateRepository.save(template2);
                 break;
             default:
