@@ -113,14 +113,14 @@ public class MailSteps {
         mailDto.setTemplateName("test-template-1");
         mailDto.setFrom(from);
         mailDto.addToItem("b.b@b.org");
-        mailDto.putMapItem("firstname", "b");
+        mailDto.putMapItem("name", "b");
         this.mailDtoList.add(mailDto);
 
         mailDto = new MailDto();
         mailDto.setTemplateName("test-template-1");
         mailDto.setFrom(from);
         mailDto.addToItem("c.c@c.org");
-        mailDto.putMapItem("firstname", "c");
+        mailDto.putMapItem("name", "c");
         this.mailDtoList.add(mailDto);
     }
 
@@ -247,11 +247,6 @@ public class MailSteps {
     public void aSMTPServer() throws Throwable {
         Wiser wiser = Environment.getMockSmtpServer().getWiser();
         assertNotNull(wiser);
-    }
-
-    @And("^I wait (\\d+) seconds$")
-    public void iWaitSeconds(int seconds) throws Throwable {
-        Thread.sleep(seconds * 1000);
     }
 
     @And("^The SMTP server has received the corresponding mail$")

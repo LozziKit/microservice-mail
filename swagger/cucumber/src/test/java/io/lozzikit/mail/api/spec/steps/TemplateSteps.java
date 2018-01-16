@@ -97,7 +97,7 @@ public class TemplateSteps {
         templateDto = new TemplateDto();
         templateDto.setName("test-template-payload");
         templateDto.setDescription("A templateDto for testing using cucumber");
-        templateDto.setContent("Hello <p th:text=\"#{name}\">Madam/Sir</p>");
+        templateDto.setContent("Subject!\n.\nHello <p th:text=\"#{name}\">Madam/Sir</p>");
     }
 
     @When("^I POST the payload to the /templates endpoint$")

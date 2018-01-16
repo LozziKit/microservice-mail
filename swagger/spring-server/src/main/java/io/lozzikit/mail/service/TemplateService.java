@@ -63,8 +63,13 @@ public class TemplateService {
     private void validateTemplate(TemplateDto templateDto) throws IOException {
         String content = templateDto.getContent();
 
-        if (content == null) {
+        if(content == null) {
             throw new IOException("Template is null!");
+        }
+
+        String[] lines = content.split("\n.\n");
+        if(lines.length < 2) {
+            throw new IOException("Template does not contain a subject header");
         }
 
         new Template("sample", new StringReader(content), configuration);

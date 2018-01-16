@@ -1,6 +1,6 @@
 package io.lozzikit.mail.smtp;
 
-import io.lozzikit.mail.api.model.MailDto;
+import io.lozzikit.mail.entity.MailEntity;
 import org.simplejavamail.MailException;
 import org.simplejavamail.email.EmailBuilder;
 import org.simplejavamail.mailer.Mailer;
@@ -30,18 +30,19 @@ public class SmtpMailer {
         mailer.setDebug(debug);
     }
 
-    public Boolean sendMail(MailDto mailDto, String body) {
+    public Boolean sendMail(MailEntity mail) {
         EmailBuilder builder = new EmailBuilder()
-            .from(mailDto.getFrom(), mailDto.getFrom())
-            .to(join(mailDto.getTo()))
-            .text(body);
+            .from(mail.getFrom(), mail.getFrom())
+            .to(join(mail.getTo()))
+            .subject(mail.getSubject())
+            .text(mail.getEffectiveContent());
 
-        if(mailDto.getCc().size() != 0) {
-            builder.cc(join(mailDto.getCc()));
+        if(mail.getCc().size() != 0) {
+            builder.cc(join(mail.getCc()));
         }
 
-        if(mailDto.getCci().size() != 0) {
-            builder.bcc(join(mailDto.getCci()));
+        if(mail.getCci().size() != 0) {
+            builder.bcc(join(mail.getCci()));
         }
 
         try {

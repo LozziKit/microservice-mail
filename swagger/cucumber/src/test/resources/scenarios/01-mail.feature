@@ -22,16 +22,16 @@ Feature: Manipulation of mails
     When I POST the payload to the /mails endpoint
     Then I receive a 201 status code
     And I receive a list of jobs payload
-    And I wait 30 seconds
+    And I wait 300 milliseconds
     And The SMTP server has received the corresponding mail
 
   Scenario: Send and cancel a mail
     Given A unique mail payload
     When I POST the payload to the /mails endpoint
-    And I wait 5 seconds
+    And I wait 5 milliseconds
     And I DELETE the job on the /jobs/id endpoint
     Then I receive a 204 status code
-    And I wait 30 seconds
+    And I wait 300 milliseconds
     And The SMTP server has not received the unique mail
 
   Scenario: Fetch an archived mail

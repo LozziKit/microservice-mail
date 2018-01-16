@@ -246,6 +246,8 @@ definitions:
                       format: url
                   effectiveContent:
                       type: string
+                  subject:
+                      type: string
 
     TemplateDto:
         type: object

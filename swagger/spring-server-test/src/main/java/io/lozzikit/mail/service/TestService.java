@@ -40,13 +40,13 @@ public class TestService {
                 TemplateEntity template1 = new TemplateEntity();
                 template1.setName("test-template-1");
                 template1.setDescription("A first template for testing");
-                template1.setContent("Hello ${name}!");
+                template1.setContent("Salutations!\n.\nHello ${name}!");
                 templateRepository.save(template1);
 
                 TemplateEntity template2 = new TemplateEntity();
                 template2.setName("test-template-2");
                 template2.setDescription("A second template for testing");
-                template2.setContent("Goodbye ${name}!");
+                template2.setContent("Thanks!\n.\nGoodbye ${name}!");
                 templateRepository.save(template2);
                 break;
             default:

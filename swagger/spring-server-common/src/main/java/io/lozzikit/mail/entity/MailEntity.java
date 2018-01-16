@@ -9,9 +9,6 @@ import java.util.Map;
 @Entity
 @Table(name = "mails")
 public class MailEntity {
-    @Value("${server.contextPath}")
-    private String contextPath;
-
     private Integer id;
     private String templateName;
 
@@ -21,6 +18,7 @@ public class MailEntity {
     private List<String> cci;
     private Map<String, String> map;
 
+    private String subject;
     private String effectiveContent;
 
     @Id
@@ -94,6 +92,15 @@ public class MailEntity {
 
     public void setMap(Map<String, String> map) {
         this.map = map;
+    }
+
+    @Column(name = "subject")
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 
     @Column(name = "effective")
