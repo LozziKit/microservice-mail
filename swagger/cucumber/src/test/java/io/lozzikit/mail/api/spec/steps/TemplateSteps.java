@@ -1,7 +1,5 @@
 package io.lozzikit.mail.api.spec.steps;
 
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -12,7 +10,8 @@ import io.lozzikit.mail.api.spec.helpers.Environment;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 
 public class TemplateSteps {
     private static int templateNum = 0;
@@ -27,6 +26,7 @@ public class TemplateSteps {
         this.api = environment.getTemplateApi();
     }
 
+    /*
     @Given("^An empty template database$")
     public void anEmptyTemplateDatabase() throws Throwable {
         Request request = new Request.Builder()
@@ -35,14 +35,15 @@ public class TemplateSteps {
             .build();
         assertEquals(200, env.executeRequest(request).code());
     }
+    */
 
     @Given("^A template endpoint$")
-    public void aTemplateEndpoint() throws Throwable {
+    public void A_Template_Endpoint() throws Throwable {
         assertNotNull(api);
     }
 
     @When("^I GET on the /templates endpoint$")
-    public void iGETOnTheTemplatesEndpoint() throws Throwable {
+    public void I_GET_On_The_Templates_Endpoint() throws Throwable {
         try {
             env.setApiResponse(api.templatesGetWithHttpInfo());
         } catch (ApiException e) {
@@ -50,6 +51,43 @@ public class TemplateSteps {
         }
     }
 
+    @When("^I GET on the /templates/name endpoint$")
+    public void I_GET_On_The_Templates_Name_Endpoint() throws Throwable {
+        try {
+            env.setApiResponse(api.templatesNameGetWithHttpInfo(templateName));
+        } catch (ApiException e) {
+            env.setApiException(e);
+        }
+    }
+
+    @When("^I POST the payload to the /templates endpoint$")
+    public void I_POST_The_Payload_To_The_Templates_Endpoint() throws Throwable {
+        try {
+            env.setApiResponse(api.templatesPostWithHttpInfo(templateDto));
+        } catch (ApiException e) {
+            env.setApiException(e);
+        }
+    }
+
+    @When("^I PUT on the /templates/name endpoint$")
+    public void I_PUT_On_The_Templates_Name_Endpoint() throws Throwable {
+        try {
+            env.setApiResponse(api.templatesNamePutWithHttpInfo(templateName, templateDto));
+        } catch (ApiException e) {
+            env.setApiException(e);
+        }
+    }
+
+    @When("^I DELETE on the /templates/name endpoint$")
+    public void I_DELETE_On_The_Templates_Name_Endpoint() throws Throwable {
+        try {
+            env.setApiResponse(api.templatesNameDeleteWithHttpInfo(templateName));
+        } catch (ApiException e) {
+            env.setApiException(e);
+        }
+    }
+
+    /*
     @Given("^A filled template database$")
     public void aFilledDatabase() throws Throwable {
         anEmptyTemplateDatabase();
@@ -60,30 +98,19 @@ public class TemplateSteps {
             .build();
         assertEquals(200, env.executeRequest(request).code());
     }
-
-    @SuppressWarnings("unchecked")
-    @Then("^I receive multiple template payloads$")
-    public void iReceiveMultipleTemplatePayloads() throws Throwable {
-        List<TemplateDto> templates = (List<TemplateDto>) env.getApiResponse().getData();
-        assertFalse(templates.isEmpty());
-    }
-
+    */
     @Given("^An existing template name")
-    public void aTemplateId() throws Throwable {
+    public void A_Template_Name() throws Throwable {
         templateName = "test-template-1";
     }
 
-    @When("^I GET on the /templates/name endpoint$")
-    public void iGETOnTheTemplatesIdEndpoint() throws Throwable {
-        try {
-            env.setApiResponse(api.templatesNameGetWithHttpInfo(templateName));
-        } catch (ApiException e) {
-            env.setApiException(e);
-        }
+    @Given("^A non-existing template name$")
+    public void A_Non_Existing_Template_Name() throws Throwable {
+        templateName = "NoTemplateWithThisName";
     }
 
     @Then("^I receive a template payload$")
-    public void iReceiveATemplatePayload() throws Throwable {
+    public void I_Receive_A_Template_Payload() throws Throwable {
         TemplateDto templateDto = (TemplateDto) env.getApiResponse().getData();
         assertNotNull(templateDto);
         assertNotNull(templateDto.getName());
@@ -92,51 +119,28 @@ public class TemplateSteps {
         assertNotNull(templateDto.getContent());
     }
 
+    @SuppressWarnings("unchecked")
+    @Then("^I receive multiple template payloads$")
+    public void I_Receive_Multiple_Template_Payloads() throws Throwable {
+        List<TemplateDto> templates = (List<TemplateDto>) env.getApiResponse().getData();
+        assertFalse(templates.isEmpty());
+    }
+
     @Given("^A template payload$")
-    public void aTemplatePayload() throws Throwable {
+    public void A_Template_Payload() throws Throwable {
         templateDto = new TemplateDto();
-        templateDto.setName("test-template-payload");
+        templateDto.setName("test-template-1");
         templateDto.setDescription("A templateDto for testing using cucumber");
-        templateDto.setContent("Subject!\n.\nHello <p th:text=\"#{name}\">Madam/Sir</p>");
+        templateDto.setContent("Subject:A test subject\n" +
+                "\n" +
+                "Hello ${name}");
     }
 
-    @When("^I POST the payload to the /templates endpoint$")
-    public void iPOSTThePayloadToTheTemplatesEndpoint() throws Throwable {
-        try {
-            env.setApiResponse(api.templatesPostWithHttpInfo(templateDto));
-        } catch (ApiException e) {
-            env.setApiException(e);
-        }
-    }
-
-    @Given("^I have a bad template payload$")
-    public void iHaveABadTemplatePayload() throws Throwable {
+    @Given("^A bad template payload$")
+    public void A_Bad_Template_Payload() throws Throwable {
         templateDto = new TemplateDto();
         templateDto.setName("test-templateDto-" + ++templateNum);
         templateDto.setDescription("A templateDto for testing using cucumber");
-        templateDto.setContent("Hello <p th:text=\"#{name");
-    }
-
-    @Given("^A non-existing template name$")
-    public void aNonExistingTemplateId() throws Throwable {
-        templateName = "NoTemplateWithThisName";
-    }
-
-    @When("^I PUT on the /templates/name endpoint$")
-    public void iPUTOnTheTemplatesIdEndpoint() throws Throwable {
-        try {
-            env.setApiResponse(api.templatesNamePutWithHttpInfo(templateName, templateDto));
-        } catch (ApiException e) {
-            env.setApiException(e);
-        }
-    }
-
-    @When("^I DELETE on the /templates/name endpoint$")
-    public void iDELETEOnTheTemplatesIdEndpoint() throws Throwable {
-        try {
-            env.setApiResponse(api.templatesNameDeleteWithHttpInfo(templateName));
-        } catch (ApiException e) {
-            env.setApiException(e);
-        }
+        templateDto.setContent("Hello ${name");
     }
 }

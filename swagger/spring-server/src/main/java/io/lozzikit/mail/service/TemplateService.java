@@ -67,7 +67,7 @@ public class TemplateService {
             throw new IOException("Template is null!");
         }
 
-        String[] lines = content.split("\n.\n");
+        String[] lines = content.split("\n\n");
         if(lines.length < 2) {
             throw new IOException("Template does not contain a subject header");
         }

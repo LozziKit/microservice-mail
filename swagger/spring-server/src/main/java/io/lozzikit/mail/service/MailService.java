@@ -81,9 +81,18 @@ public class MailService {
                         StringWriter writer = new StringWriter();
                         temp.process(mailEntity.getMap(), writer);
 
-                        String[] lines = writer.toString().split("\n.\n");
-                        mailEntity.setSubject(lines[0]);
-                        mailEntity.setEffectiveContent(lines[1]);
+                        String[] parts = writer.toString().split("\n\n");
+                        for(String line : parts[0].split("\n")) {
+                            String[] lineParts = line.split(":");
+
+                            String property = lineParts[0];
+                            String value = lineParts[1];
+
+                            if(property.equals("Subject")) {
+                                mailEntity.setSubject(value);
+                            }
+                        }
+                        mailEntity.setEffectiveContent(parts[1]);
 
                         mailRepository.save(mailEntity);
                         mailingQueue.put(Pair.of(mailEntity, jobEntity.getId()));
@@ -95,6 +104,7 @@ public class MailService {
                     // Template not found.
                     jobEntity.setStatus(StatusEnum.INVALID);
                 }
+
                 jobDtos.add(DtoFactory.createFrom(jobEntity));
             } catch (InterruptedException e) {
                 e.printStackTrace();

@@ -14,12 +14,12 @@ public class ApiSteps {
     }
 
     @Then("^I receive a (\\d+) status code$")
-    public void iReceiveAStatusCode(int status) throws Throwable {
+    public void I_Receive_A_Status_code(int status) throws Throwable {
         assertEquals(status, env.getApiStatusCode());
     }
 
     @And("^I wait (\\d+) milliseconds$")
-    public void iWaitSeconds(int milliseconds) throws Throwable {
+    public void I_Wait_Milliseconds(int milliseconds) throws Throwable {
         Thread.sleep(milliseconds);
     }
 }
