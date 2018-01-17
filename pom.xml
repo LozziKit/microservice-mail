@@ -12,6 +12,5 @@
         <module>swagger/database</module>
         <module>swagger/spring-server</module>
         <module>swagger/spring-server-common</module>
-        <module>swagger/spring-server-test</module>
     </modules>
 </project>
