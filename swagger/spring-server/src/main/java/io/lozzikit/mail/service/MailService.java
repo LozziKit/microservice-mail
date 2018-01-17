@@ -32,10 +32,10 @@ import java.util.stream.Collectors;
 
 @Service
 public class MailService {
-    @Value("${io.lozzikit.smtp.max_mail_to_send}")
+    @Value("${io.lozzikit.smtp.max.mail.throughput}")
     private Integer MAX_MAIL_TO_SEND;
 
-    @Value("${io.lozzikit.smtp.milliseconds_between_sending}")
+    @Value("${io.lozzikit.smtp.milliseconds.before.sending}")
     private Integer TIME_TO_SLEEP;
 
     @Autowired

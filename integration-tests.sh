@@ -1,6 +1,6 @@
 #!/bin/bash
 
-docker-compose up --exit-code-from cucumber
+docker-compose --file docker-compose-test.yml up --exit-code-from cucumber
 exitcode=$?
-docker-compose down
+docker-compose --file docker-compose-test.yml down
 exit $exitcode
