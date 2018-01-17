@@ -35,7 +35,7 @@ public class MailService {
     @Value("${io.lozzikit.smtp.max_mail_to_send}")
     private Integer MAX_MAIL_TO_SEND;
 
-    @Value("${io.lozzikit.smtp.milliseconds_between_sendings}")
+    @Value("${io.lozzikit.smtp.milliseconds_between_sending}")
     private Integer TIME_TO_SLEEP;
 
     @Autowired
@@ -133,6 +133,7 @@ public class MailService {
                 try {
                     pairs.add(mailingQueue.take());
                     mailingQueue.drainTo(pairs, MAX_MAIL_TO_SEND - 1);
+                    Thread.sleep(TIME_TO_SLEEP);
 
                     for (Pair<MailEntity, Integer> pair : pairs) {
                         JobEntity jobEntity = jobRepository.findOne(pair.getSecond());
@@ -151,7 +152,6 @@ public class MailService {
                     }
 
                     pairs.clear();
-                    Thread.sleep(TIME_TO_SLEEP);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

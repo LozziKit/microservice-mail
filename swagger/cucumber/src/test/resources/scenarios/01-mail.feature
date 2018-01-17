@@ -67,11 +67,6 @@ Feature: Manipulation of mails
     When I GET on the /jobs/id endpoint
     Then I receive a 404 status code
 
-  Scenario: Delete a job in progress
-    Given An in-progress job id
-    When I DELETE on the /jobs/id endpoint
-    Then I receive a 204 status code
-
   Scenario: Delete a non-existing job
     Given A non-existing job id
     When I DELETE on the /jobs/id endpoint

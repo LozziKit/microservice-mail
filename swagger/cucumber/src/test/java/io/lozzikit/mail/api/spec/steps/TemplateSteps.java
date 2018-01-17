@@ -26,17 +26,6 @@ public class TemplateSteps {
         this.api = environment.getTemplateApi();
     }
 
-    /*
-    @Given("^An empty template database$")
-    public void anEmptyTemplateDatabase() throws Throwable {
-        Request request = new Request.Builder()
-            .url(env.getTestUrl("/tests/templates"))
-            .delete()
-            .build();
-        assertEquals(200, env.executeRequest(request).code());
-    }
-    */
-
     @Given("^A template endpoint$")
     public void A_Template_Endpoint() throws Throwable {
         assertNotNull(api);
@@ -87,18 +76,6 @@ public class TemplateSteps {
         }
     }
 
-    /*
-    @Given("^A filled template database$")
-    public void aFilledDatabase() throws Throwable {
-        anEmptyTemplateDatabase();
-
-        Request request = new Request.Builder()
-            .url(env.getTestUrl("/tests/templates"))
-            .post(RequestBody.create(env.JSON, "default"))
-            .build();
-        assertEquals(200, env.executeRequest(request).code());
-    }
-    */
     @Given("^An existing template name")
     public void A_Template_Name() throws Throwable {
         templateName = "test-template-1";

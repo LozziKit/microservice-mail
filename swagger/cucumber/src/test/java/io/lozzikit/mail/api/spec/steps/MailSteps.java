@@ -42,29 +42,6 @@ public class MailSteps {
         this.jobApi = env.getJobApi();
     }
 
-    /*
-    @Given("^An empty job and mail database")
-    public void anEmptyJobAndMailDatabase() throws Throwable {
-        Request request = new Request.Builder()
-            .url(env.getTestUrl("/tests/mails+jobs"))
-            .delete()
-            .build();
-        assertEquals(200, env.executeRequest(request).code());
-    }
-    */
-    /*
-    @Given("^A filled job and mail database$")
-    public void aFilledJobAndMailDatabase() throws Throwable {
-        anEmptyJobAndMailDatabase();
-
-        Request request = new Request.Builder()
-            .url(env.getTestUrl("/tests/mails+jobs"))
-            .post(RequestBody.create(env.JSON, "default"))
-            .build();
-        assertEquals(200, env.executeRequest(request).code());
-    }
-    */
-
     @Given("^A mail endpoint$")
     public void A_Mail_Endpoint() throws Throwable {
         assertNotNull(mailApi);
@@ -151,13 +128,7 @@ public class MailSteps {
 
     @Given("^A mail id$")
     public void A_Mail_Id() throws Throwable {
-        Request request = new Request.Builder()
-                .url(env.getTestUrl("/tests/mails/one"))
-                .get()
-                .build();
-        Response res = env.executeRequest(request);
-        assertEquals(200, res.code());
-        this.mailId = Integer.parseInt(res.body().string());
+        this.mailId = 1;
     }
 
     @Given("^A non-existing mail id$")
@@ -167,13 +138,7 @@ public class MailSteps {
 
     @Given("^A job id$")
     public void A_Job_Id() throws Throwable {
-        Request request = new Request.Builder()
-                .url(env.getTestUrl("/tests/jobs/one"))
-                .get()
-                .build();
-        Response res = env.executeRequest(request);
-        assertEquals(200, res.code());
-        this.jobId = Integer.parseInt(res.body().string());
+        this.jobId = 1;
     }
 
     @Given("^A non-existing job id$")
@@ -183,24 +148,7 @@ public class MailSteps {
 
     @Given("^A processed job id$")
     public void A_Processed_Job_Id() throws Throwable {
-        Request request = new Request.Builder()
-                .url(env.getTestUrl("/tests/jobs/one?status=DONE"))
-                .get()
-                .build();
-        Response res = env.executeRequest(request);
-        assertEquals(200, res.code());
-        this.jobId = Integer.parseInt(res.body().string());
-    }
-
-    @Given("^An in-progress job id$")
-    public void An_In_Progress_Job_Id() throws Throwable {
-        Request request = new Request.Builder()
-                .url(env.getTestUrl("/tests/jobs/one?status=ONGOING"))
-                .get()
-                .build();
-        Response res = env.executeRequest(request);
-        assertEquals(200, res.code());
-        this.jobId = Integer.parseInt(res.body().string());
+        this.jobId = 1;
     }
 
     @Given("^A mail payload$")
