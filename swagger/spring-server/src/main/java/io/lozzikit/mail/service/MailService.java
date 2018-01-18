@@ -97,17 +97,19 @@ public class MailService {
                         String effectiveContent = String.join("\n\n", Arrays.copyOfRange(parts, 1, parts.length));
                         mailEntity.setEffectiveContent(effectiveContent);
 
-                        mailRepository.save(mailEntity);
                         mailingQueue.put(Pair.of(mailEntity, jobEntity.getId()));
                     } catch (IOException | TemplateException e) {
                         // Template error or
                         jobEntity.setStatus(StatusEnum.INVALID);
+                        jobEntity = jobRepository.save(jobEntity);
                     }
                 } else {
                     // Template not found.
                     jobEntity.setStatus(StatusEnum.INVALID);
+                    jobEntity = jobRepository.save(jobEntity);
                 }
 
+                mailRepository.save(mailEntity);
                 jobDtos.add(DtoFactory.createFrom(jobEntity));
             } catch (InterruptedException e) {
                 e.printStackTrace();
