@@ -47,6 +47,9 @@ public class DtoFactory {
                 mapper.using(getUrlConverter("/mails"))
                     .map(MailEntity::getId, ArchivedMailDto::setUrl);
 
+                mapper.using(getUrlConverter("/jobs"))
+                    .map(mail -> mail.getJob().getId(), ArchivedMailDto::setJobUrl);
+
                 mapper.map(mail -> mail.getJob().getStatus(), ArchivedMailDto::setStatus);
             });
 
