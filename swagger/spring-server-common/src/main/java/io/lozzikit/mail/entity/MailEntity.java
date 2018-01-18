@@ -1,7 +1,5 @@
 package io.lozzikit.mail.entity;
 
-import org.springframework.beans.factory.annotation.Value;
-
 import javax.persistence.*;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +18,8 @@ public class MailEntity {
 
     private String subject;
     private String effectiveContent;
+
+    private JobEntity job;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -110,5 +110,14 @@ public class MailEntity {
 
     public void setEffectiveContent(String effectiveContent) {
         this.effectiveContent = effectiveContent;
+    }
+
+    @OneToOne(mappedBy = "mail")
+    public JobEntity getJob() {
+        return job;
+    }
+
+    public void setJob(JobEntity job) {
+        this.job = job;
     }
 }

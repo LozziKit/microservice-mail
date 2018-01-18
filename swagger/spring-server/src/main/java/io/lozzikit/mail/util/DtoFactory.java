@@ -43,9 +43,12 @@ public class DtoFactory {
             });
 
         modelMapper.typeMap(MailEntity.class, ArchivedMailDto.class)
-            .addMappings(mapper -> mapper
-                .using(getUrlConverter("/mails"))
-                .map(MailEntity::getId, ArchivedMailDto::setUrl));
+            .addMappings(mapper -> {
+                mapper.using(getUrlConverter("/mails"))
+                    .map(MailEntity::getId, ArchivedMailDto::setUrl);
+
+                mapper.map(mail -> mail.getJob().getStatus(), ArchivedMailDto::setStatus);
+            });
 
         return modelMapper;
     }

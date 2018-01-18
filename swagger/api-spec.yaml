@@ -235,6 +235,9 @@ definitions:
                 type: object
                 additionalProperties:
                   type: string
+            status:
+                type: string
+                description: Can be any of ["DONE", "FAILED", "ONGOING", "INVALID"]
 
     ArchivedMailDto:
         allOf:
