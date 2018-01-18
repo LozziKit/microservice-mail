@@ -18,7 +18,7 @@ services:
         ports:
             - 8080:8080
             - 5005:5005
-        command: --io.lozzikit.smtp.milliseconds.before.sending=100
+        command: --io.lozzikit.smtp.milliseconds.before.sending=100 --io.lozzikit.smtp.address=cucumber
         depends_on:
             database:
                 condition: service_healthy
