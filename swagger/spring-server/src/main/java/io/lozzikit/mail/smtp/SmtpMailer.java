@@ -37,11 +37,11 @@ public class SmtpMailer {
             .subject(mail.getSubject())
             .text(mail.getEffectiveContent());
 
-        if(mail.getCc().size() != 0) {
+        if(mail.getCc() != null && mail.getCc().size() != 0) {
             builder.cc(join(mail.getCc()));
         }
 
-        if(mail.getCci().size() != 0) {
+        if(mail.getCci() != null && mail.getCci().size() != 0) {
             builder.bcc(join(mail.getCci()));
         }
 
