@@ -73,6 +73,7 @@ public class MailService {
                 jobEntity = jobRepository.save(jobEntity);
 
                 MailEntity mailEntity = EntityFactory.createFrom(mailDto);
+                mailEntity = mailRepository.save(mailEntity);
                 mailEntity.setJob(jobEntity);
                 jobEntity.setMail(mailEntity);
 
