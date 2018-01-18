@@ -73,6 +73,8 @@ public class MailService {
                 jobEntity = jobRepository.save(jobEntity);
 
                 MailEntity mailEntity = EntityFactory.createFrom(mailDto);
+                mailEntity.setJob(jobEntity);
+                jobEntity.setMail(mailEntity);
 
                 // Render template
                 TemplateEntity template = templateRepository.findOneByName(mailEntity.getTemplateName());
@@ -89,7 +91,7 @@ public class MailService {
                             String property = lineParts[0];
                             String value = lineParts[1];
 
-                            if(property.equals("Subject")) {
+                            if(property.toLowerCase().equals("subject")) {
                                 mailEntity.setSubject(value);
                             }
                         }
