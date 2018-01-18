@@ -69,7 +69,19 @@ public class TemplateService {
 
         String[] lines = content.split("\n\n");
         if(lines.length < 2) {
-            throw new IOException("Template does not contain a subject header");
+            throw new IOException("Template does not contain a header");
+        } else {
+            lines = lines[0].split("\n");
+            boolean hasSubject = false;
+            for(String meta : lines) {
+                String[] metaParts = meta.split(":");
+                if(metaParts.length == 2 && metaParts[0].trim().toLowerCase().equals("subject")) {
+                    hasSubject = true;
+                }
+            }
+            if(!hasSubject) {
+                throw new IOException("Template does not contain a subject");
+            }
         }
 
         new Template("sample", new StringReader(content), configuration);
