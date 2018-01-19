@@ -123,7 +123,7 @@ public class MailService {
     }
 
     public List<ArchivedMailDto> getAllMails() {
-        return mailRepository.findAll().stream()
+        return mailRepository.findAllByOrderByIdDesc().stream()
             .map(DtoFactory::createFrom)
             .collect(Collectors.toList());
     }
