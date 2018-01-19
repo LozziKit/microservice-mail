@@ -23,7 +23,7 @@ Feature: Manipulation of mails
     When I POST the payload to the /mails endpoint
     Then I receive a 201 status code
     And I receive a list of job payload
-    And I wait 300 milliseconds
+    And I wait 600 milliseconds
     And The SMTP server has received the corresponding mail
 
   Scenario: Send and cancel a mail
