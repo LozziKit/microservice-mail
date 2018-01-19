@@ -1,7 +1,7 @@
 language: java
 
 script:
-    - mvn install
+    - mvn test
     - ./integration-tests.sh
 
 sudo: required
