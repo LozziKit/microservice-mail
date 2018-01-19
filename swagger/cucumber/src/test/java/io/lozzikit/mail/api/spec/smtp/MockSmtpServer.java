@@ -1,16 +1,22 @@
 package io.lozzikit.mail.api.spec.smtp;
 
-import org.subethamail.wiser.Wiser;
+
+import com.dumbster.smtp.SimpleSmtpServer;
+
+import java.io.IOException;
 
 public class MockSmtpServer {
-    private Wiser wiser;
+    private SimpleSmtpServer server;
 
     public MockSmtpServer() {
-        wiser = new Wiser();
-        wiser.start();
+        try {
+            server = SimpleSmtpServer.start(SimpleSmtpServer.DEFAULT_SMTP_PORT);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public Wiser getWiser() {
-        return wiser;
+    public SimpleSmtpServer getWiser() {
+        return server;
     }
 }

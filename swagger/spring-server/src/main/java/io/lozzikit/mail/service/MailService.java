@@ -140,10 +140,6 @@ public class MailService {
         public void run() {
             List<Pair<MailEntity, Integer>> pairs = new ArrayList<>();
 
-            Logger logger = LoggerFactory.getLogger(MailService.class);
-            logger.info("Batches have size " + String.valueOf(MAX_MAIL_TO_SEND));
-            logger.info("Will wait " + String.valueOf(TIME_TO_SLEEP) + "ms before sending a batch");
-
             while (true) {
                 try {
                     pairs.add(mailingQueue.take());

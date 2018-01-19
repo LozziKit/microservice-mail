@@ -173,10 +173,15 @@
             <version>1.2.5</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
+        <!-- <dependency>
             <groupId>org.subethamail</groupId>
             <artifactId>subethasmtp</artifactId>
             <version>3.1.7</version>
+        </dependency> -->
+        <dependency>
+            <groupId>com.github.kirviq</groupId>
+            <artifactId>dumbster</artifactId>
+            <version>1.7.1</version>
         </dependency>
         <dependency>
             <groupId>com.squareup.okhttp</groupId>

@@ -1,5 +1,6 @@
 package io.lozzikit.mail.api.spec.steps;
 
+import com.dumbster.smtp.SimpleSmtpServer;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import cucumber.api.java.en.And;
@@ -13,8 +14,6 @@ import io.lozzikit.mail.api.dto.ArchivedMailDto;
 import io.lozzikit.mail.api.dto.JobDto;
 import io.lozzikit.mail.api.dto.MailDto;
 import io.lozzikit.mail.api.spec.helpers.Environment;
-import org.subethamail.wiser.Wiser;
-import org.subethamail.wiser.WiserMessage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,8 +53,8 @@ public class MailSteps {
 
     @And("^A SMTP server$")
     public void A_SMTP_Server() throws Throwable {
-        Wiser wiser = Environment.getMockSmtpServer().getWiser();
-        assertNotNull(wiser);
+        SimpleSmtpServer server = Environment.getMockSmtpServer().getWiser();
+        assertNotNull(server);
     }
 
     @When("^I GET on the /mails endpoint$")
@@ -118,9 +117,9 @@ public class MailSteps {
         List<JobDto> jobs = (List<JobDto>) env.getApiResponse().getData();
 
         Request request = new Request.Builder()
-                .url(env.getServerUrl(jobs.get(0).getUrl()))
-                .delete()
-                .build();
+            .url(env.getServerUrl(jobs.get(0).getUrl()))
+            .delete()
+            .build();
 
         Response res = env.executeRequest(request);
         env.setApiResponse(new ApiResponse(res.code(), res.headers().toMultimap()));
@@ -216,41 +215,45 @@ public class MailSteps {
 
     @And("^The SMTP server has received the corresponding mail$")
     public void The_SMTP_Server_Has_Received_The_Corresponding_Mail() throws Throwable {
-        Wiser wiser = Environment.getMockSmtpServer().getWiser();
+        SimpleSmtpServer server = Environment.getMockSmtpServer().getWiser();
 
         // Check that the senders are the same
         assertArrayEquals(mailDtoList.stream()
-                        .map(MailDto::getFrom)
-                        .sorted()
-                        .toArray(),
-                wiser.getMessages().stream()
-                        .map(WiserMessage::getEnvelopeSender)
-                        .sorted()
-                        .toArray()
+                .map(MailDto::getFrom)
+                .sorted()
+                .toArray(),
+            server.getReceivedEmails().stream()
+                .map(m -> cleanupString(m.getHeaderValue("From"), " "))
+                .sorted()
+                .toArray()
         );
 
         // Check that the receivers are the same.
         assertArrayEquals(mailDtoList.stream()
-                        .flatMap(m -> Stream.of(
-                                m.getTo().stream(),
-                                m.getCc().stream(),
-                                m.getCci().stream()
-                        ).flatMap(i -> i))
-                        .sorted()
-                        .toArray(),
-                wiser.getMessages().stream()
-                        .map(WiserMessage::getEnvelopeReceiver)
-                        .sorted()
-                        .toArray()
+                .flatMap(m -> Stream.of(
+                    m.getTo().stream(),
+                    m.getCc().stream(),
+                    m.getCci().stream()
+                ).flatMap(i -> i))
+                .sorted()
+                .toArray(),
+            server.getReceivedEmails().stream()
+                .map(m -> cleanupString(m.getHeaderValue("To"), " "))
+                .sorted()
+                .toArray()
         );
     }
 
     @And("^The SMTP server has not received the unique mail$")
     public void The_SMTP_Server_Has_Not_Received_The_Unique_Mail() throws Throwable {
-        Wiser wiser = Environment.getMockSmtpServer().getWiser();
+        SimpleSmtpServer server = Environment.getMockSmtpServer().getWiser();
 
-        assertTrue(wiser.getMessages().stream()
-                .noneMatch(m -> m.getEnvelopeSender().equals(uniqueMailfrom)));
+        assertTrue(server.getReceivedEmails().stream()
+            .noneMatch(m -> cleanupString(m.getHeaderValue("To"), " ").equals(uniqueMailfrom)));
 
+    }
+
+    private String cleanupString(String str, String split) {
+        return str.split(split)[0].replace("\"", "");
     }
 }
