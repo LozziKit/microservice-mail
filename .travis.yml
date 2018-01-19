@@ -1,0 +1,14 @@
+language: java
+
+script:
+    - mvn install
+    - ./integration-tests.sh
+
+sudo: required
+
+services:
+    - docker
+
+cache:
+    directories:
+        - $HOME/.m2
