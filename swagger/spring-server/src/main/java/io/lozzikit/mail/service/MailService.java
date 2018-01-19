@@ -16,8 +16,11 @@ import io.lozzikit.mail.repository.TemplateRepository;
 import io.lozzikit.mail.smtp.SmtpMailer;
 import io.lozzikit.mail.util.DtoFactory;
 import io.lozzikit.mail.util.EntityFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
@@ -34,10 +37,10 @@ import java.util.stream.Collectors;
 @Service
 public class MailService {
     @Value("${io.lozzikit.smtp.max.mail.throughput}")
-    private Integer MAX_MAIL_TO_SEND;
+    private int MAX_MAIL_TO_SEND;
 
     @Value("${io.lozzikit.smtp.milliseconds.before.sending}")
-    private Integer TIME_TO_SLEEP;
+    private int TIME_TO_SLEEP;
 
     @Autowired
     private MailRepository mailRepository;
@@ -136,6 +139,10 @@ public class MailService {
         @Override
         public void run() {
             List<Pair<MailEntity, Integer>> pairs = new ArrayList<>();
+
+            Logger logger = LoggerFactory.getLogger(MailService.class);
+            logger.info("Batches have size " + String.valueOf(MAX_MAIL_TO_SEND));
+            logger.info("Will wait " + String.valueOf(TIME_TO_SLEEP) + "ms before sending a batch");
 
             while (true) {
                 try {
