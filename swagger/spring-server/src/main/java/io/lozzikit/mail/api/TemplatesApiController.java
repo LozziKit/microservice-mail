@@ -51,7 +51,7 @@ public class TemplatesApiController implements TemplatesApi {
     public ResponseEntity<Void> templatesNameDelete(@PathVariable String name) {
         try {
             if(templateService.deleteTemplate(name) > 0) {
-                return new ResponseEntity<>(HttpStatus.OK);
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
@@ -64,7 +64,7 @@ public class TemplatesApiController implements TemplatesApi {
     public ResponseEntity<Void> templatesNamePut(@PathVariable String name, @RequestBody TemplateDto templateDto) {
         try {
             templateService.updateTemplate(name, templateDto);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (NullPointerException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (IOException e) {

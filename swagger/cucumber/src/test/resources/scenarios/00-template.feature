@@ -37,7 +37,7 @@ Feature: Creation of templates
     Given An existing template name
     And A template payload
     When I PUT on the /templates/name endpoint
-    Then I receive a 200 status code
+    Then I receive a 204 status code
     When I GET on the /templates/name endpoint
     Then I receive a 200 status code
 
@@ -56,7 +56,7 @@ Feature: Creation of templates
   Scenario: Delete an existing template
     Given An existing template name
     When I DELETE on the /templates/name endpoint
-    Then I receive a 200 status code
+    Then I receive a 204 status code
     When I GET on the /templates/name endpoint
     Then I receive a 404 status code
 
