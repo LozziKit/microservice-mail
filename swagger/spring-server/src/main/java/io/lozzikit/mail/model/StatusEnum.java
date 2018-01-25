@@ -17,11 +17,6 @@ public enum StatusEnum {
         this.value = value;
     }
 
-    @Override
-    public String toString() {
-        return String.valueOf(value);
-    }
-
     public static StatusEnum fromValue(String text) {
         for (StatusEnum b : StatusEnum.values()) {
             if (String.valueOf(b.value).equals(text)) {
@@ -29,5 +24,10 @@ public enum StatusEnum {
             }
         }
         return null;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(value);
     }
 }

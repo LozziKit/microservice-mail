@@ -16,11 +16,8 @@ import io.lozzikit.mail.repository.TemplateRepository;
 import io.lozzikit.mail.smtp.SmtpMailer;
 import io.lozzikit.mail.util.DtoFactory;
 import io.lozzikit.mail.util.EntityFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
@@ -82,20 +79,20 @@ public class MailService {
 
                 // Render template
                 TemplateEntity template = templateRepository.findOneByName(mailEntity.getTemplateName());
-                if(template != null) {
+                if (template != null) {
                     try {
                         Template temp = new Template("sample", new StringReader(template.getContent()), configuration);
                         StringWriter writer = new StringWriter();
                         temp.process(mailEntity.getMap(), writer);
 
                         String[] parts = writer.toString().split("\n\n");
-                        for(String line : parts[0].split("\n")) {
+                        for (String line : parts[0].split("\n")) {
                             String[] lineParts = line.split(":");
 
                             String property = lineParts[0];
                             String value = lineParts[1];
 
-                            if(property.toLowerCase().equals("subject")) {
+                            if (property.toLowerCase().equals("subject")) {
                                 mailEntity.setSubject(value);
                             }
                         }
@@ -149,10 +146,10 @@ public class MailService {
                     for (Pair<MailEntity, Integer> pair : pairs) {
                         JobEntity jobEntity = jobRepository.findOne(pair.getSecond());
 
-                        if(jobEntity.getStatus() != StatusEnum.CANCELLED) {
+                        if (jobEntity.getStatus() != StatusEnum.CANCELLED) {
                             Boolean success = mailer.sendMail(pair.getFirst());
 
-                            if(success) {
+                            if (success) {
                                 jobEntity.setStatus(StatusEnum.DONE);
                             } else {
                                 jobEntity.setStatus(StatusEnum.FAILED);

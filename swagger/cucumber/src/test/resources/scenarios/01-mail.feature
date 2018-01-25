@@ -41,7 +41,7 @@ Feature: Manipulation of mails
     Then I receive a job with invalid status
 
   Scenario: Send an mail with an invalid template
-    Given An mail with an invalid template
+    Given A mail with an invalid template
     When I POST the payload to the /mails endpoint
     Then I receive a job with invalid status
 

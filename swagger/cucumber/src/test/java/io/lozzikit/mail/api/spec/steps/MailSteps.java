@@ -3,7 +3,6 @@ package io.lozzikit.mail.api.spec.steps;
 import com.dumbster.smtp.SimpleSmtpServer;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
-import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -12,9 +11,9 @@ import io.lozzikit.mail.ApiException;
 import io.lozzikit.mail.ApiResponse;
 import io.lozzikit.mail.api.JobApi;
 import io.lozzikit.mail.api.MailApi;
-import io.lozzikit.mail.api.dto.ArchivedMailDto;
-import io.lozzikit.mail.api.dto.JobDto;
-import io.lozzikit.mail.api.dto.MailDto;
+import io.lozzikit.mail.api.model.ArchivedMailDto;
+import io.lozzikit.mail.api.model.JobDto;
+import io.lozzikit.mail.api.model.MailDto;
 import io.lozzikit.mail.api.spec.helpers.Environment;
 
 import java.util.ArrayList;
@@ -259,6 +258,7 @@ public class MailSteps {
         return str.split(split)[0].replace("\"", "");
     }
 
+    @SuppressWarnings("unchecked")
     @Then("^I receive a job with invalid status$")
     public void iReceiveAJobWithInvalidStatus() throws Throwable {
         List<JobDto> jobs = (List<JobDto>) env.getApiResponse().getData();
@@ -280,8 +280,8 @@ public class MailSteps {
         this.mailDtoList.add(mailDto);
     }
 
-    @Given("^An mail with an invalid template$")
-    public void anMailWithAnInvalidTemplate() throws Throwable {
+    @Given("^A mail with an invalid template$")
+    public void aMailWithAnInvalidTemplate() throws Throwable {
         final String from = "a.a@a.org";
 
         this.mailDtoList = new ArrayList<>();

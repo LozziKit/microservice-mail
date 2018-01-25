@@ -29,9 +29,9 @@ public class JobService {
     public void deleteJobById(Integer id) {
         JobEntity job = jobRepository.findOne(id);
 
-        if(job == null) {
+        if (job == null) {
             throw new NullPointerException();
-        } else if(job.getStatus() == StatusEnum.DONE) {
+        } else if (job.getStatus() == StatusEnum.DONE) {
             throw new UnsupportedOperationException();
         } else {
             job.setStatus(StatusEnum.CANCELLED);

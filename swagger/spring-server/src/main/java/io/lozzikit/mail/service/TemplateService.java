@@ -63,23 +63,23 @@ public class TemplateService {
     private void validateTemplate(TemplateDto templateDto) throws IOException {
         String content = templateDto.getContent();
 
-        if(content == null) {
+        if (content == null) {
             throw new IOException("Template is null!");
         }
 
         String[] lines = content.split("\n\n");
-        if(lines.length < 2) {
+        if (lines.length < 2) {
             throw new IOException("Template does not contain a header");
         } else {
             lines = lines[0].split("\n");
             boolean hasSubject = false;
-            for(String meta : lines) {
+            for (String meta : lines) {
                 String[] metaParts = meta.split(":");
-                if(metaParts.length == 2 && metaParts[0].trim().toLowerCase().equals("subject")) {
+                if (metaParts.length == 2 && metaParts[0].trim().toLowerCase().equals("subject")) {
                     hasSubject = true;
                 }
             }
-            if(!hasSubject) {
+            if (!hasSubject) {
                 throw new IOException("Template does not contain a subject");
             }
         }

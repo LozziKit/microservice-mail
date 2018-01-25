@@ -5,7 +5,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.lozzikit.mail.ApiException;
 import io.lozzikit.mail.api.TemplateApi;
-import io.lozzikit.mail.api.dto.TemplateDto;
+import io.lozzikit.mail.api.model.TemplateDto;
 import io.lozzikit.mail.api.spec.helpers.Environment;
 
 import java.util.List;
@@ -109,8 +109,8 @@ public class TemplateSteps {
         templateDto.setName("test-template-1");
         templateDto.setDescription("A templateDto for testing using cucumber");
         templateDto.setContent("Subject:A test subject\n" +
-                "\n" +
-                "Hello ${name}");
+            "\n" +
+            "Hello ${name}");
     }
 
     @Given("^A bad template payload$")

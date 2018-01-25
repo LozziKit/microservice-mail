@@ -16,11 +16,6 @@ public class DtoFactory {
     private static String contextPath;
     private static ModelMapper modelMapper = configureModelMapper();
 
-    @Value("${server.contextPath}")
-    public void setContextPath(String contextPath) {
-        DtoFactory.contextPath = contextPath;
-    }
-
     private static Converter<Integer, String> getUrlConverter(String resource) {
         return ctx -> contextPath + resource + "/" + ctx.getSource();
     }
@@ -66,5 +61,10 @@ public class DtoFactory {
 
     public static TemplateDto createFrom(TemplateEntity entity) {
         return modelMapper.map(entity, TemplateDto.class);
+    }
+
+    @Value("${server.contextPath}")
+    public void setContextPath(String contextPath) {
+        DtoFactory.contextPath = contextPath;
     }
 }

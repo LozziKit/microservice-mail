@@ -18,6 +18,9 @@ import java.util.Properties;
  * Created by Olivier Liechti on 24/06/17.
  */
 public class Environment {
+    // Smtp server
+    private static MockSmtpServer mockSmtpServer = new MockSmtpServer();
+    public final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     // Api
     private TemplateApi templateApi = new TemplateApi();
     private MailApi mailApi = new MailApi();
@@ -26,16 +29,10 @@ public class Environment {
     private String baseServerUrl;
     private String serverContextPath;
     private String baseTestUrl;
-
-    public final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-
     // Response
     private ApiResponse apiResponse;
     private ApiException apiException;
     private boolean apiCallThrewException;
-
-    // Smtp server
-    private static MockSmtpServer mockSmtpServer = new MockSmtpServer();
 
     public Environment() throws IOException {
         Properties properties = new Properties();
@@ -48,6 +45,10 @@ public class Environment {
         jobApi.getApiClient().setBasePath(serverContextPath);
 
         baseTestUrl = properties.getProperty("io.lozzikit.mail.server-test.url");
+    }
+
+    public static MockSmtpServer getMockSmtpServer() {
+        return mockSmtpServer;
     }
 
     public TemplateApi getTemplateApi() {
@@ -100,9 +101,5 @@ public class Environment {
 
     public int getApiStatusCode() {
         return (apiCallThrewException) ? apiException.getCode() : apiResponse.getStatusCode();
-    }
-
-    public static MockSmtpServer getMockSmtpServer() {
-        return mockSmtpServer;
     }
 }

@@ -12,6 +12,6 @@
         <module>swagger/database</module>
         <module>swagger/smtp</module>
         <module>swagger/spring-server</module>
-        <module>swagger/spring-server-common</module>
+        <module>swagger/java-client</module>
     </modules>
 </project>
