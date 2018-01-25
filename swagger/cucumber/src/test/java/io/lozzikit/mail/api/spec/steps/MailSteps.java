@@ -3,8 +3,10 @@ package io.lozzikit.mail.api.spec.steps;
 import com.dumbster.smtp.SimpleSmtpServer;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
+import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.lozzikit.mail.ApiException;
 import io.lozzikit.mail.ApiResponse;
@@ -255,5 +257,40 @@ public class MailSteps {
 
     private String cleanupString(String str, String split) {
         return str.split(split)[0].replace("\"", "");
+    }
+
+    @Then("^I receive a job with invalid status$")
+    public void iReceiveAJobWithInvalidStatus() throws Throwable {
+        List<JobDto> jobs = (List<JobDto>) env.getApiResponse().getData();
+        JobDto jobDto = jobs.get(0);
+        assertEquals("INVALID", jobDto.getStatus());
+    }
+
+    @Given("^An invalid mail payload$")
+    public void anInvalidMailPayload() throws Throwable {
+        final String from = "a.a@a.org";
+
+        this.mailDtoList = new ArrayList<>();
+
+        MailDto mailDto = new MailDto();
+        mailDto.setTemplateName("test-template-1");
+        mailDto.setFrom(from);
+        mailDto.addToItem("c.c@c.org");
+        mailDto.putMapItem("thisVariableIsNotInTheTemplate", "Miguel");
+        this.mailDtoList.add(mailDto);
+    }
+
+    @Given("^An mail with an invalid template$")
+    public void anMailWithAnInvalidTemplate() throws Throwable {
+        final String from = "a.a@a.org";
+
+        this.mailDtoList = new ArrayList<>();
+
+        MailDto mailDto = new MailDto();
+        mailDto.setTemplateName("thisTemplateDoesntExistLol");
+        mailDto.setFrom(from);
+        mailDto.addToItem("b.b@b.org");
+        mailDto.putMapItem("name", "Sphinx");
+        this.mailDtoList.add(mailDto);
     }
 }

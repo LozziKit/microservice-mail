@@ -35,6 +35,16 @@ Feature: Manipulation of mails
     And I wait 300 milliseconds
     And The SMTP server has not received the unique mail
 
+  Scenario: Send an invalid mail payload
+    Given An invalid mail payload
+    When I POST the payload to the /mails endpoint
+    Then I receive a job with invalid status
+
+  Scenario: Send an mail with an invalid template
+    Given An mail with an invalid template
+    When I POST the payload to the /mails endpoint
+    Then I receive a job with invalid status
+
   Scenario: Fetch all archived mails
     When I GET on the /mails endpoint
     Then I receive a 200 status code
