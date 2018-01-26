@@ -4,6 +4,9 @@ import javax.persistence.*;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Mail POJO
+ */
 @Entity
 @Table(name = "mails")
 public class MailEntity {

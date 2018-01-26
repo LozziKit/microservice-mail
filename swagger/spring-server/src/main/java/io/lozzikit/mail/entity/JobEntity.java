@@ -4,6 +4,9 @@ import io.lozzikit.mail.model.StatusEnum;
 
 import javax.persistence.*;
 
+/**
+ * Job POJO
+ */
 @Entity
 @Table(name = "jobs")
 public class JobEntity {

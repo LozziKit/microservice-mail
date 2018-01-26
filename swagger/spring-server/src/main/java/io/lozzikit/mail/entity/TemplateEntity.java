@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 
+/**
+ * Template POJO
+ */
 @Entity
 @Table(name = "templates")
 public class TemplateEntity {

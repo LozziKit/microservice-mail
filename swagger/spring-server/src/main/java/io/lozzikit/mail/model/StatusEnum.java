@@ -1,5 +1,8 @@
 package io.lozzikit.mail.model;
 
+/**
+ * Status code enum
+ */
 public enum StatusEnum {
     DONE("DONE"),
 
