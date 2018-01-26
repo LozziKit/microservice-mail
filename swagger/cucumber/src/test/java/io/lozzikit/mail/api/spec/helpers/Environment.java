@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- * Created by Olivier Liechti on 24/06/17.
+ * This class represents an Environment in which cucumber will execute it's testing
  */
 public class Environment {
     // Smtp server
