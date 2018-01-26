@@ -33,8 +33,8 @@ public class TemplateService {
 
     public List<TemplateDto> getAllTemplates() {
         return templateRepository.findAll().stream()
-            .map(DtoFactory::createFrom)
-            .collect(Collectors.toList());
+                .map(DtoFactory::createFrom)
+                .collect(Collectors.toList());
     }
 
     public TemplateDto getTemplateById(Integer id) {

@@ -10,15 +10,15 @@ public class EntityFactoryTest {
     public void createFromMailDto() {
         MailDto dto = new MailDto();
         dto.from("test.one@testing.mail")
-            .addToItem("a.a@a.a")
-            .addToItem("b.b@b.b")
-            .addCcItem("c.c@c.c")
-            .addCcItem("d.d@d.d")
-            .addCciItem("e.e@e.e")
-            .addCciItem("f.f@f.f")
-            .templateName("test-template-1")
-            .putMapItem("name", "adam")
-            .putMapItem("event", "anniversary");
+                .addToItem("a.a@a.a")
+                .addToItem("b.b@b.b")
+                .addCcItem("c.c@c.c")
+                .addCcItem("d.d@d.d")
+                .addCciItem("e.e@e.e")
+                .addCciItem("f.f@f.f")
+                .templateName("test-template-1")
+                .putMapItem("name", "adam")
+                .putMapItem("event", "anniversary");
 
         MailEntity entity = EntityFactory.createFrom(dto);
 

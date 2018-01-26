@@ -18,8 +18,8 @@ public class JobService {
 
     public List<JobDto> getAllJobs() {
         return jobRepository.findAll().stream()
-            .map(DtoFactory::createFrom)
-            .collect(Collectors.toList());
+                .map(DtoFactory::createFrom)
+                .collect(Collectors.toList());
     }
 
     public JobDto getJobById(Integer id) {

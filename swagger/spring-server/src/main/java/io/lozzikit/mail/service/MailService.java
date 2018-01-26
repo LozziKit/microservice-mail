@@ -124,8 +124,8 @@ public class MailService {
 
     public List<ArchivedMailDto> getAllMails() {
         return mailRepository.findAllByOrderByIdDesc().stream()
-            .map(DtoFactory::createFrom)
-            .collect(Collectors.toList());
+                .map(DtoFactory::createFrom)
+                .collect(Collectors.toList());
     }
 
     public ArchivedMailDto getMailById(Integer id) {

@@ -123,6 +123,7 @@ public class Environment {
 
     /**
      * Getter for the Api Response
+     *
      * @return ApiResponse
      */
     public ApiResponse getApiResponse() {
@@ -163,6 +164,7 @@ public class Environment {
 
     /**
      * Getter for boolean if exception happended
+     *
      * @return
      */
     public boolean isApiCallThrewException() {

@@ -32,10 +32,10 @@ public class SmtpMailer {
 
     public Boolean sendMail(MailEntity mail) {
         EmailBuilder builder = new EmailBuilder()
-            .from(mail.getFrom(), mail.getFrom())
-            .to(join(mail.getTo()))
-            .subject(mail.getSubject())
-            .text(mail.getEffectiveContent());
+                .from(mail.getFrom(), mail.getFrom())
+                .to(join(mail.getTo()))
+                .subject(mail.getSubject())
+                .text(mail.getEffectiveContent());
 
         if (mail.getCc() != null && mail.getCc().size() != 0) {
             builder.cc(join(mail.getCc()));

@@ -109,8 +109,8 @@ public class TemplateSteps {
         templateDto.setName("test-template-1");
         templateDto.setDescription("A templateDto for testing using cucumber");
         templateDto.setContent("Subject:A test subject\n" +
-            "\n" +
-            "Hello ${name}");
+                "\n" +
+                "Hello ${name}");
     }
 
     @Given("^A bad template payload$")

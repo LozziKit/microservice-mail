@@ -118,9 +118,9 @@ public class MailSteps {
         List<JobDto> jobs = (List<JobDto>) env.getApiResponse().getData();
 
         Request request = new Request.Builder()
-            .url(env.getServerUrl(jobs.get(0).getUrl()))
-            .delete()
-            .build();
+                .url(env.getServerUrl(jobs.get(0).getUrl()))
+                .delete()
+                .build();
 
         Response res = env.executeRequest(request);
         env.setApiResponse(new ApiResponse(res.code(), res.headers().toMultimap()));
@@ -220,28 +220,28 @@ public class MailSteps {
 
         // Check that the senders are the same
         assertArrayEquals(mailDtoList.stream()
-                .map(MailDto::getFrom)
-                .sorted()
-                .toArray(),
-            server.getReceivedEmails().stream()
-                .map(m -> cleanupString(m.getHeaderValue("From"), " "))
-                .sorted()
-                .toArray()
+                        .map(MailDto::getFrom)
+                        .sorted()
+                        .toArray(),
+                server.getReceivedEmails().stream()
+                        .map(m -> cleanupString(m.getHeaderValue("From"), " "))
+                        .sorted()
+                        .toArray()
         );
 
         // Check that the receivers are the same.
         assertArrayEquals(mailDtoList.stream()
-                .flatMap(m -> Stream.of(
-                    m.getTo().stream(),
-                    m.getCc().stream(),
-                    m.getCci().stream()
-                ).flatMap(i -> i))
-                .sorted()
-                .toArray(),
-            server.getReceivedEmails().stream()
-                .map(m -> cleanupString(m.getHeaderValue("To"), " "))
-                .sorted()
-                .toArray()
+                        .flatMap(m -> Stream.of(
+                                m.getTo().stream(),
+                                m.getCc().stream(),
+                                m.getCci().stream()
+                        ).flatMap(i -> i))
+                        .sorted()
+                        .toArray(),
+                server.getReceivedEmails().stream()
+                        .map(m -> cleanupString(m.getHeaderValue("To"), " "))
+                        .sorted()
+                        .toArray()
         );
     }
 
@@ -250,7 +250,7 @@ public class MailSteps {
         SimpleSmtpServer server = Environment.getMockSmtpServer().getWiser();
 
         assertTrue(server.getReceivedEmails().stream()
-            .noneMatch(m -> cleanupString(m.getHeaderValue("To"), " ").equals(uniqueMailfrom)));
+                .noneMatch(m -> cleanupString(m.getHeaderValue("To"), " ").equals(uniqueMailfrom)));
 
     }
 

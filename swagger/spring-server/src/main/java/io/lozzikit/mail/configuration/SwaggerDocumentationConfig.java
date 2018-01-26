@@ -16,25 +16,25 @@ public class SwaggerDocumentationConfig {
 
     ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-            .title("microservice-mail")
-            .description("Mailing microservice for the AMT 2017 course @ HEIG-VD.")
-            .license("")
-            .licenseUrl("http://unlicense.org")
-            .termsOfServiceUrl("")
-            .version("0.1.0")
-            .contact(new Contact("", "", ""))
-            .build();
+                .title("microservice-mail")
+                .description("Mailing microservice for the AMT 2017 course @ HEIG-VD.")
+                .license("")
+                .licenseUrl("http://unlicense.org")
+                .termsOfServiceUrl("")
+                .version("0.1.0")
+                .contact(new Contact("", "", ""))
+                .build();
     }
 
     @Bean
     public Docket customImplementation() {
         return new Docket(DocumentationType.SWAGGER_2)
-            .select()
-            .apis(RequestHandlerSelectors.basePackage("io.lozzikit.mail.api"))
-            .build()
-            .directModelSubstitute(org.joda.time.LocalDate.class, java.sql.Date.class)
-            .directModelSubstitute(org.joda.time.DateTime.class, java.util.Date.class)
-            .apiInfo(apiInfo());
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("io.lozzikit.mail.api"))
+                .build()
+                .directModelSubstitute(org.joda.time.LocalDate.class, java.sql.Date.class)
+                .directModelSubstitute(org.joda.time.DateTime.class, java.util.Date.class)
+                .apiInfo(apiInfo());
     }
 
 }

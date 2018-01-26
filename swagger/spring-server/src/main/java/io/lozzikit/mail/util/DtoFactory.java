@@ -24,29 +24,29 @@ public class DtoFactory {
         ModelMapper modelMapper = new ModelMapper();
 
         modelMapper.typeMap(TemplateEntity.class, TemplateDto.class)
-            .addMappings(mapper -> mapper
-                .using(getUrlConverter("/templates"))
-                .map(TemplateEntity::getName, TemplateDto::setUrl));
+                .addMappings(mapper -> mapper
+                        .using(getUrlConverter("/templates"))
+                        .map(TemplateEntity::getName, TemplateDto::setUrl));
 
         modelMapper.typeMap(JobEntity.class, JobDto.class)
-            .addMappings(mapper -> {
-                mapper.using(getUrlConverter("/jobs"))
-                    .map(JobEntity::getId, JobDto::setUrl);
+                .addMappings(mapper -> {
+                    mapper.using(getUrlConverter("/jobs"))
+                            .map(JobEntity::getId, JobDto::setUrl);
 
-                mapper.using(getUrlConverter("/mails"))
-                    .map(j -> j.getMail().getId(), JobDto::setMail);
-            });
+                    mapper.using(getUrlConverter("/mails"))
+                            .map(j -> j.getMail().getId(), JobDto::setMail);
+                });
 
         modelMapper.typeMap(MailEntity.class, ArchivedMailDto.class)
-            .addMappings(mapper -> {
-                mapper.using(getUrlConverter("/mails"))
-                    .map(MailEntity::getId, ArchivedMailDto::setUrl);
+                .addMappings(mapper -> {
+                    mapper.using(getUrlConverter("/mails"))
+                            .map(MailEntity::getId, ArchivedMailDto::setUrl);
 
-                mapper.using(getUrlConverter("/jobs"))
-                    .map(mail -> mail.getJob().getId(), ArchivedMailDto::setJobUrl);
+                    mapper.using(getUrlConverter("/jobs"))
+                            .map(mail -> mail.getJob().getId(), ArchivedMailDto::setJobUrl);
 
-                mapper.map(mail -> mail.getJob().getStatus(), ArchivedMailDto::setStatus);
-            });
+                    mapper.map(mail -> mail.getJob().getStatus(), ArchivedMailDto::setStatus);
+                });
 
         return modelMapper;
     }
