@@ -13,11 +13,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
+/**
+ * Mail api controller
+ */
 @Controller
 public class MailsApiController implements MailsApi {
     @Autowired
     private MailService mailService;
 
+    /**
+     * Post for mails DTO
+     *
+     * @param mailDtos mail to post
+     * @return list of job related to mails posted
+     */
     @Override
     public ResponseEntity<List<JobDto>> mailsPost(@RequestBody List<MailDto> mailDtos) {
         try {
@@ -27,6 +36,11 @@ public class MailsApiController implements MailsApi {
         }
     }
 
+    /**
+     * Getter for mails
+     *
+     * @return list of mails
+     */
     @Override
     public ResponseEntity<List<ArchivedMailDto>> mailsGet() {
         List<ArchivedMailDto> mails = mailService.getAllMails();
@@ -38,6 +52,12 @@ public class MailsApiController implements MailsApi {
         return new ResponseEntity<>(mails, HttpStatus.OK);
     }
 
+    /**
+     * Getter for mail given its id
+     *
+     * @param id id of mail to fetch
+     * @return archivedMail
+     */
     @Override
     public ResponseEntity<ArchivedMailDto> mailsIdGet(@PathVariable Integer id) {
         try {
