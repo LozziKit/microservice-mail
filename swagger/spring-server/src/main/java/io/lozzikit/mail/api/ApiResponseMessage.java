@@ -16,9 +16,18 @@ public class ApiResponseMessage {
     String type;
     String message;
 
+    /**
+     * Ctor
+     */
     public ApiResponseMessage() {
     }
 
+    /**
+     * Codes to sent back for api responses
+     *
+     * @param code code to fetch
+     * @param message message linked
+     */
     public ApiResponseMessage(int code, String message) {
         this.code = code;
         switch (code) {
@@ -44,27 +53,57 @@ public class ApiResponseMessage {
         this.message = message;
     }
 
+    /**
+     * Getter for code
+     *
+     * @return code
+     */
     @XmlTransient
     public int getCode() {
         return code;
     }
 
+    /**
+     * Setter for code
+     *
+     * @param code code to set
+     */
     public void setCode(int code) {
         this.code = code;
     }
 
+    /**
+     * Getter for type
+     *
+     * @return type
+     */
     public String getType() {
         return type;
     }
 
+    /**
+     * Setter for type
+     *
+     * @param type type to set
+     */
     public void setType(String type) {
         this.type = type;
     }
 
+    /**
+     * Getter for message
+     *
+     * @return message
+     */
     public String getMessage() {
         return message;
     }
 
+    /**
+     * Setter for message
+     *
+     * @param message message to set
+     */
     public void setMessage(String message) {
         this.message = message;
     }

@@ -18,6 +18,11 @@ public class JobsApiController implements JobsApi {
     @Autowired
     private JobService jobService;
 
+    /**
+     * Getter for a job
+     *
+     * @return list of job
+     */
     @Override
     public ResponseEntity<List<JobDto>> jobsGet() {
         List<JobDto> mails = jobService.getAllJobs();
@@ -29,6 +34,12 @@ public class JobsApiController implements JobsApi {
         return new ResponseEntity<>(mails, HttpStatus.OK);
     }
 
+    /**
+     * Getter for a job given its id
+     *
+     * @param id id of job to fetch
+     * @return job
+     */
     @Override
     public ResponseEntity<JobDto> jobsIdGet(@PathVariable Integer id) {
         try {
@@ -38,6 +49,13 @@ public class JobsApiController implements JobsApi {
         }
     }
 
+    /**
+     * Delete for given job with id
+     *
+     * @param id id of job to delete
+     *
+     * @return void
+     */
     @Override
     public ResponseEntity<Void> jobsIdDelete(@PathVariable Integer id) {
         try {
