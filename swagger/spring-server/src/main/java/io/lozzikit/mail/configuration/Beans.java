@@ -6,6 +6,9 @@ import freemarker.template.Version;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
+/**
+ * Beans for swagger
+ */
 @org.springframework.context.annotation.Configuration
 public class Beans {
     @Bean
@@ -13,6 +16,10 @@ public class Beans {
         return new PropertySourcesPlaceholderConfigurer();
     }
 
+    /**
+     * Getter for configuration of swagger/spring
+     * @return
+     */
     @Bean
     public Configuration getConfiguration() {
         Version version = Configuration.VERSION_2_3_23;

@@ -14,6 +14,10 @@ import springfox.documentation.spring.web.plugins.Docket;
 @Configuration
 public class SwaggerDocumentationConfig {
 
+    /**
+     * Information for api
+     * @return
+     */
     ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("microservice-mail")

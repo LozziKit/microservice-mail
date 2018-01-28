@@ -16,9 +16,15 @@ public class SmtpMailer {
     @Value("${io.lozzikit.smtp.debug}")
     private Boolean debug;
 
+    /**
+     * Server address
+     */
     @Value("${io.lozzikit.smtp.address}")
     private String address;
 
+    /**
+     * Server port
+     */
     @Value("${io.lozzikit.smtp.port}")
     private Integer port;
 
@@ -30,6 +36,12 @@ public class SmtpMailer {
         mailer.setDebug(debug);
     }
 
+    /**
+     * Logic for mock smtp server
+     *
+     * @param mail mail to send
+     * @return
+     */
     public Boolean sendMail(MailEntity mail) {
         EmailBuilder builder = new EmailBuilder()
                 .from(mail.getFrom(), mail.getFrom())
