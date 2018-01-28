@@ -44,6 +44,20 @@ $ docker-compose up
 
 This will lauch the full Spring Sever with the Swagger specification. From that point you might want to lauch the Web interface
 
+## REST API
+This service exposes a REST API. Its specification can be found in ` swagger/api-spec.yaml ` . Here is a brief introduction to the three kinds of endpoints.
+
+### mail
+You can GET a history of every mail created and their content, GET a mail from its id and POST a new mail.
+
+The fields of a new mail are : name of template to use, from, to, cc, cci, and a map of variable names from the template and their values.
+
+### job
+When a mail is created, the service creates and sends back a job. A job contains its location (url), the location of the mail, and its status (DONE, FAILED, ONGOING, or INVALD). You can GET one or all jobs, as well as DELETE a job (cancels the expedition of a mail if it's not too late).
+
+### template
+You can GET all templates, POST a new template, as well as GET, PUT, and DELETE a template by name.
+
 ## Web Interface
 This app allows the administration of the Lozzikit - Mail service. 
 It was develloped during the TWEB course at the University of Applied Sciences of Yverdon.
