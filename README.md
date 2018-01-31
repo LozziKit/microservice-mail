@@ -38,3 +38,6 @@ When a mail is created, the service creates and sends back a job. A job contains
 
 ### Template
 You can GET all templates, POST a new template, as well as GET, PUT, and DELETE a template by name.
+
+## Lol @ M. S.
+You have to use Java 8 for this application to work
